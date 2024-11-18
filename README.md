@@ -1,8 +1,5 @@
-# sutd_1D_CTD
-SUTD Term 1 1D Project
-
-
-# 10.014 : Computational Thinking for Design
+# 10.014 : SUTD Computational Thinking for Design
+SUTD Term 1 Freshmore Computing Module
 
 # Synopsis
 
