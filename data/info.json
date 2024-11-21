@@ -1,69 +1,30 @@
 {
-    "user": {
-      "id": 1,
-      "name": "John Doe",
-      "email": "john.doe@example.com",
-      "age": 30,
-      "isActive": true,
-      "address": {
-        "street": "123 Main St",
-        "city": "Springfield",
-        "state": "IL",
-        "zipCode": "62701"
-      },
-      "phoneNumbers": [
-        {
-          "type": "home",
-          "number": "+1-555-1234"
-        },
-        {
-          "type": "work",
-          "number": "+1-555-5678"
-        }
-      ],
-      "preferences": {
-        "notifications": true,
-        "darkMode": false
-      }
-    },
-    "orders": [
+  "Term 1" : [
       {
-        "orderId": 101,
-        "date": "2024-10-15",
-        "totalAmount": 199.99,
-        "items": [
-          {
-            "productId": 501,
-            "name": "Laptop",
-            "quantity": 1,
-            "price": 999.99
-          },
-          {
-            "productId": 502,
-            "name": "Mouse",
-            "quantity": 1,
-            "price": 29.99
-          }
-        ]
-      },
-      {
-        "orderId": 102,
-        "date": "2024-10-20",
-        "totalAmount": 49.99,
-        "items": [
-          {
-            "productId": 503,
-            "name": "Keyboard",
-            "quantity": 1,
-            "price": 49.99
-          }
-        ]
+          "10.013 Modelling Analysis" : [12, "-"],
+          "10.015 Physical World" : [12, "-"], 
+          "10.014 Computational Thinking for Design" : [12, "-"],
+          "02.001 Global Humanities & Social Sciences": [12, "-"]
       }
-    ],
-    "metadata": {
-      "createdAt": "2024-10-10T12:00:00Z",
-      "updatedAt": "2024-10-21T08:00:00Z",
-      "version": "1.0"
-    }
-}
+  ],
   
+  "Term 2" : [
+      {
+          "10.018 Modeling Space and Systems" : [12, "-"],
+          "10.017 Technological World" : [12, "-"], 
+          "10.016 Science for a Sustainable World" : [12, "-"],
+          "3.007 Design Thinking and Innovation": [12, "-"]
+      }
+  ],
+  
+  "Term 3" : [
+      {
+          "10.022 Modelling Uncertainty" : [12, "-"],
+          "02.001 Global Humanities: Literature, Philosophy, and Ethics" : [12, "-"], 
+          "10.019 Science and Technology for Healthcare" : [12, "-"],
+          "10.020 Data Driven World": [12, "-"],
+          "10.023 Designing Energy Systems": [12, "-"],
+          "10.024 Spatial Design World": [12, "-"]
+      }
+  ]
+}
