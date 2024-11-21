@@ -1,4 +1,4 @@
-from classes.module import *
+from card import *
 
 import turtle
 

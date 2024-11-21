@@ -1,11 +1,9 @@
 # class module
-class Module:
-
-	# params: name, 
-	def __init__(self, num, name, cred): #initialises module class with 3 arguments
-		self._num = num # module number
-		self._name = name #module name
+class Card:
+	def __init__(self, name, cred, imagePath): #initialises module class with 3 arguments
+		self._name = name # module number
 		self._cred = cred #module credits
+		self._imagePath = imagePath #path to link the image to the respective cards of the modules
 			
 	# return module number
 	def mod_num(self):
