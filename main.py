@@ -10,3 +10,16 @@ screen.addshape(image)
 turtle.shape(image)
 
 turtle.done()
+
+Module.__name__ = input("module taken")
+grade = input("grade achieved")
+if grade == "A":
+    gpa_score = 5.0
+elif grade == "B":
+    gpa_score = 3.5
+elif grade == "C":
+    gpa_score = 2.0
+elif grade == "D":
+    gpa_score = 1.0
+elif grade == "F":
+    gpa_score = 0.0
