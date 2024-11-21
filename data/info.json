@@ -1,0 +1,69 @@
+{
+    "user": {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "age": 30,
+      "isActive": true,
+      "address": {
+        "street": "123 Main St",
+        "city": "Springfield",
+        "state": "IL",
+        "zipCode": "62701"
+      },
+      "phoneNumbers": [
+        {
+          "type": "home",
+          "number": "+1-555-1234"
+        },
+        {
+          "type": "work",
+          "number": "+1-555-5678"
+        }
+      ],
+      "preferences": {
+        "notifications": true,
+        "darkMode": false
+      }
+    },
+    "orders": [
+      {
+        "orderId": 101,
+        "date": "2024-10-15",
+        "totalAmount": 199.99,
+        "items": [
+          {
+            "productId": 501,
+            "name": "Laptop",
+            "quantity": 1,
+            "price": 999.99
+          },
+          {
+            "productId": 502,
+            "name": "Mouse",
+            "quantity": 1,
+            "price": 29.99
+          }
+        ]
+      },
+      {
+        "orderId": 102,
+        "date": "2024-10-20",
+        "totalAmount": 49.99,
+        "items": [
+          {
+            "productId": 503,
+            "name": "Keyboard",
+            "quantity": 1,
+            "price": 49.99
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "createdAt": "2024-10-10T12:00:00Z",
+      "updatedAt": "2024-10-21T08:00:00Z",
+      "version": "1.0"
+    }
+}
+  
