@@ -11,7 +11,8 @@ turtle.shape(image)
 
 turtle.done()
 
-Module.__name__ = input("module taken")
+module_taken = input("module taken")
+Mod = Module("module taken")
 grade = input("grade achieved")
 if grade == "A":
     gpa_score = 5.0
