@@ -1,1 +1,2 @@
-print('hello world')
+from module import *
+
