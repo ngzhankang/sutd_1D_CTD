@@ -18,3 +18,4 @@ class Module:
 	# return module credits	
 	def mod_credits(self):
 		return self._cred
+	
