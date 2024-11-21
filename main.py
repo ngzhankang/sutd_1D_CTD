@@ -13,6 +13,7 @@ turtle.done()
 
 module_taken = input("module taken")
 Mod = Module("module taken")
+
 grade = input("grade achieved")
 if grade == "A":
     gpa_score = 5.0
