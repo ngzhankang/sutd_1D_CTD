@@ -16,4 +16,8 @@ class Card:
 	# return module credits	
 	def mod_credits(self):
 		return self._cred
-	
+
+def calc_grade(grade_dict, gradelist):
+	total_credit = (grade_dict[gradelist[0]]*12) + (grade_dict[gradelist[1]]*12) + (grade_dict[gradelist[2]]*12) + (grade_dict[gradelist[3]]*12)
+	GPA = total_credit/(4*12)
+	return GPA
