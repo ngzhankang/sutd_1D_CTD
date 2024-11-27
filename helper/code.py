@@ -18,6 +18,8 @@ class Card:
 		return self._cred
 
 def calc_grade(grade_dict, gradelist):
-	total_credit = (grade_dict[gradelist[0]]*12) + (grade_dict[gradelist[1]]*12) + (grade_dict[gradelist[2]]*12) + (grade_dict[gradelist[3]]*12)
+	total_credit = 0
+	for i in gradelist:
+		total_credit += grade_dict[gradelist[i]]*12
 	GPA = total_credit/(4*12)
 	return GPA
