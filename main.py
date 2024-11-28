@@ -84,17 +84,17 @@ while state == True:
           try:
             # if elif else statement to ensure user's input is a valid input else return error print and asks user to input again
             # if user inputs q, whole program will be shut down if they do not want to run the program anymore
-            if choice == 'Q' or choice == 'q':
+            if choice.upper() == 'Q':
               print('Quitting...')
               state = False
             # if user inputs r, their choice of electives will be reset in case they chose the wrong electives
-            elif choice == 'R' or choice == 'r':
+            elif choice.upper() == 'R':
               print('Resetting...')
               courseslist3 = copy.deepcopy(courseslist)
               electivelist = []
               print()
             # if user inputs c, user will continue on to the next part of the program where they can calculate their GPA
-            elif choice == 'C' or choice == 'c':
+            elif choice.upper() == 'C':
               # checks if user has selected two electives before allowing user to proceed
               if len(electivelist) != 2:
                 print('Please select 2 electives before proceeding!')
@@ -102,7 +102,7 @@ while state == True:
               # if user has selected two electives, original list of courses will be updated to remove the 2 electives user is not taking
               # proceeds on to next part of program once list of course is updated
               else:
-                for course in courseslist[3:]:
+                for course in courseslist[2:]:
                   if course not in electivelist:
                     courseslist.remove(course)
                 print('Continuing...')
@@ -130,7 +130,6 @@ while state == True:
 
       # third while loop to ask user to input their grades and ensure program doesn't loop back to start of program
       while state == True:
-        
         # shows user their modules and enquires user on their grades for each module
         print('Please select the course you want to update with your grades (1 - {}): '.format(len(courseslist)))
         for i in range(1, len(courseslist)+1):
@@ -147,7 +146,7 @@ while state == True:
         # try except statement to ensure user's input is an int else return error print and asks user to input again
         try:
           # allows user to calculate their grades once they are done inputting all their grades
-          if selection == 'C' or selection == 'c':
+          if selection.upper() == 'C':
             print('Calculating GPA...')
             # checks if user has filled up all the grades before proceeding to calculate
             if any('-' in lists for lists in gradeslist):
@@ -163,12 +162,12 @@ while state == True:
               # maybe add diff prints for diff scores (im too laze to do now)
               state = False
           # allows user to head back to reselect their term
-          elif selection == 'B' or selection == 'b':
+          elif selection.upper() == 'B':
             print('Backing out...')
             print()
             break
           # allows user to quit the entire program
-          elif selection == 'Q' or selection == 'q':
+          elif selection.upper() == 'Q':
             print('Quitting...')
             state = False
           # displays to user the valid grade inputs that can be inputted when the user chooses a module to update their grades
