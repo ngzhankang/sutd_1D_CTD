@@ -23,5 +23,5 @@ def calc_grade(grade_dict, gradelist):
 	# add total grade scores based on what the scores are with relation to the grades to calculate the GPA
 	for elem in gradelist:
 		total_credit += grade_dict[elem]*12
-	GPA = total_credit/(4*12)
+	GPA = round(total_credit/(4*12), 2)
 	return GPA
