@@ -1,14 +1,46 @@
+# im gonna mess around with this file so dont mind me(for real)
 # import library
 import tkinter as tk
 import json, copy
+from utils import load_config, render_deck
 
-# open info.json file in datafiles folder to read the content as a dictionary
-with open('datafiles/info.json', 'r') as file:
-    courses = json.load(file)
+# main logic
+def main():
+    courses, grade_dict = load_config()
 
-# open grades.json file in datafiles folder to read the content as a dictionary
-with open('datafiles/grades.json', 'r') as file:
-    grade_dict = json.load(file)
+    # init tkinter & set win size
+    win = tk.Tk()
+    win.title("ZK Tkinter Test")
+    win.geometry("300x200")
+    
+    # delete all residues/widgets from window
+    for widget in win.winfo_children():
+        widget.destroy()
+
+    # input params
+    
+
+
+
+
+    
+    win.mainloop()
+    
+
+
+
+    info = render_deck(courses, grade_dict)
+
+# init logics
+state = True #logic to quit loop
+
+
+
+
+
+
+
+
 
 
 
