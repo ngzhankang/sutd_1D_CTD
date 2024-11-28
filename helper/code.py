@@ -17,8 +17,10 @@ class Card:
 	def mod_credits(self):
 		return self._cred
 
+# function to calculate grades
 def calc_grade(grade_dict, gradelist):
 	total_credit = 0
+	# add total grade scores based on what the scores are with relation to the grades to calculate the GPA
 	for i in gradelist:
 		total_credit += grade_dict[gradelist[i]]*12
 	GPA = total_credit/(4*12)

@@ -128,8 +128,10 @@ while state == True:
             print('Please input a valid option!')
             print()            
 
+      # third while loop to ask user to input their grades and ensure program doesn't loop back to start of program
       while state == True:
-
+        
+        # shows user their modules and enquires user on their grades for each module
         print('Please select the course you want to update with your grades (1 - {}): '.format(len(courseslist)))
         for i in range(1, len(courseslist)+1):
           print('({}) {}: {}'.format(i, courseslist[i-1], gradeslist[i-1][1]))
@@ -139,14 +141,19 @@ while state == True:
         print('Press (Q) to quit.')
         print()
 
+        # enquire user for an input to know what user wants to do
         selection = input('Input an option: ')
         print()
+        # try except statement to ensure user's input is an int else return error print and asks user to input again
         try:
+          # allows user to calculate their grades once they are done inputting all their grades
           if selection == 'C' or selection == 'c':
             print('Calculating GPA...')
+            # checks if user has filled up all the grades before proceeding to calculate
             if any('-' in lists for lists in gradeslist):
               print('You have not updated all your grades yet! Unable to calculate...')
               print()
+            # calculate user's GPA by running the calc_grade function
             else:
               gradelist = []
               for lists in gradeslist:
@@ -155,26 +162,33 @@ while state == True:
               print('Your GPA is... \n{}'.format(gpa))
               #maybe add diff prints for diff scores (im too laze to do now)
               state = False
+          # allows user to head back to reselect their term
           elif selection == 'B' or selection == 'b':
             print('Backing out...')
             print()
             break
+          # allows user to quit the entire program
           elif selection == 'Q' or selection == 'q':
             print('Quitting...')
             state = False
+          # displays to user the valid grade inputs that can be inputted when the user chooses a module to update their grades
           elif 1 <= int(selection) <= len(gradeslist):
             print('Allowed input for grades: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]'. format(*list(grade_dict.keys())))
             grade = input('Please input your grade for {}: '.format(courseslist[int(selection)-1]))
             print()
             if grade in list(grade_dict.keys()):
+              # updates grades in gradeslist
               gradeslist[int(selection)-1][1] = grade
               print('Updating grade...')
+            # print error statement to inform user wrong grade was inputted
             else:
               print('Please only input correct grade values [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]'. format(*list(grade_dict.keys())))
             print()
+          # print error statement to inform user that that is not a valid option selected
           else:
             print('Please input a valid option!')
             print()
+        # print error statement to inform user that that is not a valid option selected if any errors occur
         except:
           print('Please input a valid option!')
           print()
