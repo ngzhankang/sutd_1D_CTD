@@ -1,5 +1,5 @@
 #  import code.py file from helper folder to use code from code.py file
-from helper import code
+from . import code
 # import json library to read json files
 import json
 # import copy library to use deepcopy to copy lists
