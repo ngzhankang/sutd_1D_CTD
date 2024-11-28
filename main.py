@@ -160,7 +160,7 @@ while state == True:
                 gradelist.append(lists[1])
               gpa = code.calc_grade(grade_dict, gradelist)
               print('Your GPA is... \n{}'.format(gpa))
-              #maybe add diff prints for diff scores (im too laze to do now)
+              # maybe add diff prints for diff scores (im too laze to do now)
               state = False
           # allows user to head back to reselect their term
           elif selection == 'B' or selection == 'b':
@@ -199,4 +199,4 @@ while state == True:
 
   #error print occuring when there is any errors occuring
   except:
-    print('Please input a valid term number betwe1en 1 and 3!')
+    print('Please input a valid term number between 1 and 3!')
