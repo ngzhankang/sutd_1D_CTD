@@ -8,7 +8,7 @@ class StartScreen:
 
     def setup_ui(self):
         # Layout for difficulty selection
-        self.welcome_label = self.tk.Label(self.root, text="Welcome to So You Thought Dat", font=("Poppins", 32))
+        self.welcome_label = self.tk.Label(self.root, text="Study Up Till Death", font=("Old School Adventures", 32))
         self.welcome_label.place(relx=0.5, rely=0.2, anchor="center")  # Center the title label
 
         self.title_label = self.tk.Label(self.root, text="Select Difficulty", font=("Old School Adventures", 22))
