@@ -8,18 +8,21 @@ class StartScreen:
 
     def setup_ui(self):
         # Layout for difficulty selection
-        self.title_label = self.tk.Label(self.root, text="Select Difficulty", font=("Helvetica", 24))
+        self.welcome_label = self.tk.Label(self.root, text="Welcome to So You Thought Dat", font=("Poppins", 32))
+        self.welcome_label.place(relx=0.5, rely=0.2, anchor="center")  # Center the title label
+
+        self.title_label = self.tk.Label(self.root, text="Select Difficulty", font=("Old School Adventures", 22))
         self.title_label.place(relx=0.5, rely=0.3, anchor="center")  # Center the title label
 
         # Buttons for difficulty
-        self.term1_button = self.tk.Button(self.root, text="Term 1 (Easy)", width=20, height=2, command=lambda: self.start_game("Term 1"))
-        self.term1_button.place(relx=0.5, rely=0.4, anchor="center")  # Center the term 1 button
+        self.term1_button = self.tk.Button(self.root, text="Term 1 (Easy)", width=20, height=2, bg='#59BB7B', fg='black', command=lambda: self.start_game("Term 1"))
+        self.term1_button.place(relx=0.5, rely=0.45, anchor="center")  # Center the term 1 button
 
-        self.term2_button = self.tk.Button(self.root, text="Term 2 (Medium)", width=20, height=2, command=lambda: self.start_game("Term 2"))
-        self.term2_button.place(relx=0.5, rely=0.5, anchor="center")  # Center the term 2 button
+        self.term2_button = self.tk.Button(self.root, text="Term 2 (Medium)", width=20, height=2, bg='#F8333C', fg='white', command=lambda: self.start_game("Term 2"))
+        self.term2_button.place(relx=0.5, rely=0.55, anchor="center")  # Center the term 2 button
 
-        self.term3_button = self.tk.Button(self.root, text="Term 3 (Hard)", width=20, height=2, command=lambda: self.start_game("Term 3"))
-        self.term3_button.place(relx=0.5, rely=0.6, anchor="center")  # Center the term 3 button
+        self.term3_button = self.tk.Button(self.root, text="Term 3 (Hard)", width=20, height=2, bg='#FCAB10', fg='black', command=lambda: self.start_game("Term 3"))
+        self.term3_button.place(relx=0.5, rely=0.65, anchor="center")  # Center the term 3 button
 
     def start_game(self, difficulty):
         self.game.set_difficulty(difficulty)
