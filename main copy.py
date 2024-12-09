@@ -226,7 +226,6 @@ class App(ttk.Frame):
 
     def deal_damage(self):
         self.buttonclicks = 0
-        self.calculate_button.config(state=tk.DISABLED)
         self.confirm_attack_button.config(state=tk.DISABLED)
         self.calculate_button.config(state=tk.DISABLED)
         """Deal damage to the enemy and move to the next turn."""
@@ -296,6 +295,7 @@ class App(ttk.Frame):
         event_window = tk.Toplevel(self.root)  # Create a new popup window
         event_window.title("Special Event")
         event_window.geometry("400x300")
+        # moves window to center
         x = (event_window.winfo_screenwidth() - event_window.winfo_reqwidth()) / 2 - 100
         y = (event_window.winfo_screenheight() - event_window.winfo_reqheight()) / 2 - 100
         event_window.geometry("+%d+%d" % (x, y))
@@ -312,8 +312,7 @@ class App(ttk.Frame):
         btn = tk.Button(event_window, text='RIP :(', command=lambda: self.close_window(event_window))
         btn.place(relx=0.5, rely=0.6, anchor='center')
 
-        # Prevent user from closing the window with the X button
-        event_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event_window))  # Disable the close button entirely
+        event_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event_window))
 
     def show_shop(self):
         """Display a shop after defeating the boss."""
