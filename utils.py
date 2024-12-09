@@ -33,14 +33,14 @@ class Card:
 		return f"{self.name} ({self.grade})"
 
 class RandomnizeShopCards:
-    def __init__(self):
-        self.test1 = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
-        self.test2 = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+    def __init__(self, test1, test2):
+        self.test1 = test1
+        self.test2 = test2
     
-    def shop(self):
+    def shop(self, test1, test2):
         randomnizedShopCards = {}
-        for i in range(len(self.name_ls)):
-            randomnizedShopCards[self.name_ls[i]] = choice(self.grade_ls)
+        for i in range(len(test1)):
+            randomnizedShopCards[test1[i]] = choice(test2)
         print(randomnizedShopCards)
         return randomnizedShopCards
 

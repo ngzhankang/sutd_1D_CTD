@@ -329,16 +329,15 @@ class App(ttk.Frame):
         # List of items in the shop
         test1 = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
         test2 = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
-        items_for_sale = RandomnizeShopCards.shop(test1, test2)
+        items_for_sale = RandomnizeShopCards.shop(root, test1, test2)
 
         # Prevent user from closing the window with the X button
         shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(shop_window))  # Disable the close button entirely
 
         # Display the items for sale
         tk.Label(shop_window, text="Welcome to the shop!").pack(pady=10)
-
-        print(items_for_sale)
-        for item, cost in items_for_sale:
+        
+        for item, cost in items_for_sale.items():
             btn = tk.Button(
                 shop_window,
                 text=f"{item} - {cost} gold",
