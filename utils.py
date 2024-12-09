@@ -40,7 +40,8 @@ class RandomnizeShopCards:
     def shop(self, coursework, ownGrade):
         randomnizedShopCards = {}
         for i in range(len(coursework)):
-            randomnizedShopCards[coursework[i]] = [load_grades(choice(ownGrade)), choice(ownGrade)]
+            randomGrade = choice(ownGrade)
+            randomnizedShopCards[coursework[i]] = [load_grades(randomGrade), randomGrade]
         print(randomnizedShopCards)
         return randomnizedShopCards
 
