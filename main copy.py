@@ -341,8 +341,8 @@ class App(ttk.Frame):
         for item, cost in items_for_sale.items():
             btn = tk.Button(
                 shop_window,
-                text=f"{item} - {cost} gold",
-                command=lambda i=item, c=cost: self.purchase_item(i, c, shop_window, items_for_sale)
+                text=f"{item} - {cost[1]} - {cost[0]} gold",
+                command=lambda i=item, c=cost[0]: self.purchase_item(i, c, shop_window, items_for_sale)
             )
             btn.pack(pady=3)
 
