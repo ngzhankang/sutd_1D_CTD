@@ -28,7 +28,7 @@ def shuffle_deck():
 
     pass
 def card(name, grade):
-    return set({name, (grade)})
+    return name, grade
 
 
 # create starting deck
