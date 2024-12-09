@@ -334,6 +334,7 @@ class App(ttk.Frame):
         # Display the items for sale
         tk.Label(shop_window, text="Welcome to the shop!").pack(pady=10)
 
+        # print(items_for_sale)
         for item, cost in items_for_sale.items():
             btn = tk.Button(
                 shop_window,

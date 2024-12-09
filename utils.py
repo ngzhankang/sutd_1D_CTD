@@ -41,6 +41,7 @@ class RandomnizeShopCards:
         randomnizedShopCards = {}
         for i in range(len(self.name_ls)):
             randomnizedShopCards[self.name_ls[i]] = choice(self.grade_ls)
+        print(randomnizedShopCards)
         return randomnizedShopCards
 
 # create starting deck
@@ -76,4 +77,4 @@ class Cards:
 
 cards = Cards()
 hand = cards.hand()
-print(hand)
+# print(hand)
