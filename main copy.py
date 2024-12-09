@@ -8,6 +8,7 @@ from random import sample, randint, shuffle
 from utils import *
 from StartScreen import StartScreen
 from Enemy import Enemy
+import tkinter.font as tkFont
 # from Card import Card
 
 # main logic
@@ -27,6 +28,7 @@ class App(ttk.Frame):
         self.confirm_button = None  # Track the confirmation button to avoid duplicates
         self.card_buttons = {}  # List to keep track of card buttons
         self.wallet = 20
+        self.tkFont = tkFont
         self.buttonclicks = 0
 
         self.start_screen = StartScreen(root, self, tk)
@@ -37,7 +39,8 @@ class App(ttk.Frame):
         self.root.update_idletasks()  # Update the window size
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
-        self.root.title("Study Up Till Death")
+
+   
 
     def setup_ui(self):
         # Layout Frames
@@ -160,7 +163,7 @@ class App(ttk.Frame):
                 height=5,  # Fixed height
                 command=lambda c=card: self.select_card(c, self.selected),
                 bg = 'white',
-                fg = 'black'
+                fg = 'black',
             )
             self.card_buttons[card] = button  # Track card buttons
             button.pack(side="left", padx=5, pady=5)
@@ -321,23 +324,18 @@ class App(ttk.Frame):
         shop_window.deiconify()
 
         # List of items in the shop
-        items_for_sale = {
-            "Potion": 5,
-            "Gold Boost": 10,
-            "Shield": 8,
-            "Health Elixir": 12
-        }
+        items_for_sale = RandomnizeShopCards()
 
         # Prevent user from closing the window with the X button
         shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(shop_window))  # Disable the close button entirely
 
         # Display the items for sale
-        tk.Label(shop_window, text="Welcome to the shop!", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(shop_window, text="Welcome to the shop!").pack(pady=10)
 
         for item, cost in items_for_sale.items():
             btn = tk.Button(
                 shop_window,
-                text=f"{item} - {cost} gold",
+                text=f"{item} - {cost} gold"
                 command=lambda i=item, c=cost: self.purchase_item(i, c, shop_window, items_for_sale)
             )
             btn.pack(pady=3)
@@ -389,7 +387,7 @@ class App(ttk.Frame):
         window.geometry("400x300")
 
         # Show the player's current wallet amount
-        tk.Label(window, text=f"Current Gold: {self.wallet}", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(window, text=f"Current Gold: {self.wallet}").pack(pady=10)
 
         # Shop Instructions
         tk.Label(window, text="Choose an option:").pack(pady=5)
@@ -404,14 +402,14 @@ class App(ttk.Frame):
         buttons = []
 
         for item, cost in items.items():
-            btn = tk.Button(window, text=f"{item} - {cost} gold", 
+            btn = tk.Button(window, text=f"{item} - {cost} gold",
                     command=lambda i=item, c=cost, w=window, b=buttons: self.purchase_item(i, c, w, b))
             
             btn.pack(pady=3)
             buttons.append(btn)  # Add the button to the tracking list
 
         # Option to skip shopping
-        skip_btn = tk.Button(window, text="Skip Shop (Receive Bonus Gold)", 
+        skip_btn = tk.Button(window, text="Skip Shop (Receive Bonus Gold)",
                 command=lambda w=window: self.skip_shop(w)).pack(pady=3)
         
         skip_btn.pack(pady=3)
@@ -437,7 +435,7 @@ class App(ttk.Frame):
     def game_over_screen(self, message):
         """Display a Game Over screen."""
         # Game Over message
-        game_over_label = tk.Label(self.root, text=message, font=("Helvetica", 24))
+        game_over_label = tk.Label(self.root, text=message)
         game_over_label.place(relx=0.5, rely=0.3, anchor="center")
 
         # Buttons for Quit and Restart
