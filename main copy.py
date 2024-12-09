@@ -224,9 +224,6 @@ class App(ttk.Frame):
         self.calculate_button.config(state=tk.DISABLED)
 
     def deal_damage(self):
-        self.calculate_button.config(state=tk.DISABLED)
-        self.confirm_attack_button.config(state=tk.DISABLED)
-        self.calculate_button.config(state=tk.DISABLED)
         """Deal damage to the enemy and move to the next turn."""
         if self.current_enemy:
             gpa_damage = round(sum(card.value for card in self.selected_classcards) / 4, 1)
@@ -256,9 +253,7 @@ class App(ttk.Frame):
             self.game_over("You won!")
             return
 
-        self.current_turn = 1
         self.current_enemy = self.encounters.pop(0)
-        self.turn_label.config(text=f"Turn: {self.current_turn} / {self.turn_limit}")
         self.selected_cards_label.config(text="Selected Cards: None")
         self.enemy_label.config(text=f"Enemy: {self.current_enemy.name}")
         self.message_label.config(text="Select 4 cards to deal damage!")
@@ -267,6 +262,9 @@ class App(ttk.Frame):
 
         self.confirm_attack_button.config(state=tk.DISABLED)
         self.calculate_button.config(state=tk.DISABLED)
+
+         # Ensure game waits after finishing shop
+        self.message_label.config(text="Defeated the boss. Would you like to visit the shop now?")
 
     def next_turn(self):
         """Move to the next turn."""
@@ -337,6 +335,7 @@ class App(ttk.Frame):
                 tk.Button(window, text="Close Shop", command=lambda: self.skip_shop(window)).pack(pady=3)
 
 
+
         # Allow exiting the shop screen after the choice is made
         # window.destroy()
         self.next_encounter()
@@ -393,6 +392,7 @@ class App(ttk.Frame):
         """Check if the player has collected all the required cards."""
         if not self.encounters:
             self.game_over_screen("Victory! You conquered all challenges!")
+
 
 
     def game_over(self, message):
