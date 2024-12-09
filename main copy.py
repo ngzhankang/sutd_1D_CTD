@@ -358,6 +358,7 @@ class App(ttk.Frame):
         """Handle item purchase logic."""
         if self.wallet >= cost:
             self.wallet -= cost
+            self.wallet_label.config(text=f"Gold: {self.wallet}")
             messagebox.showinfo("Purchase Successful", f"Successfully purchased {item}!")
             window.destroy()
             # self.check_victory_condition()
