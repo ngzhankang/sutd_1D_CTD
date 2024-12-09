@@ -1,5 +1,5 @@
 #  import code.py file from helper folder to use code from code.py file
-from carddd import Card
+from Card import Card
 # import json library to read json files
 import json
 # import copy library to use deepcopy to copy lists

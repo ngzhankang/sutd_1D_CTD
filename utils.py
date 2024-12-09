@@ -7,6 +7,10 @@ def load_config():
         courses, grade_dict = json.load(file1), json.load(file2)
         return courses, grade_dict
 
+def load_grades(grade):
+    with open('./datafiles/grades.json', 'r') as file:
+        return json.load(file)[grade]
+
 def render_deck(courses, grade_dict):
     termstr = 'Term ' + str(term)
     courelist = list(courses[termstr][0].keys())
