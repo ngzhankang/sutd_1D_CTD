@@ -3,7 +3,7 @@
 import tkinter as tk
 from tkinter import ttk
 import json, copy
-from random import sample
+from random import sample, randint
 from utils import load_config, render_deck
 from StartScreen import StartScreen
 from Enemy import Enemy
@@ -82,10 +82,10 @@ class App(ttk.Frame):
     def create_deck(self):
         """Create the player's starting deck with grades mapped to GPA values"""
         return [
-            Card("Homework", "A"),
-            Card("Study", "A-"),
-            Card("Project", "B+"),
-            Card("Research", "B+"),
+            Card("Homework", "B"),
+            Card("Study", "C"),
+            Card("Project", "D"),
+            Card("Research", "C"),
             Card("Extra Credit", "B"),
             Card("Extra Work", "B-"),
             Card("Essay", "B-"),
@@ -117,10 +117,10 @@ class App(ttk.Frame):
             gpa_scaling = [1.0, 1.8, 2.5, 3.1, 4.0, 5.3]
             for i in range(4):
                 encounters.append(Enemy(base_enemies[i], gpa_scaling[i], "Regular"))
-            # Midterm Boss (mid-point encounter)
-            encounters.append(Enemy(base_enemies[3], gpa_scaling[3], "Midterm"))
             # Finals Boss
             encounters.append(Enemy(base_enemies[4], gpa_scaling[5], "Finals"))
+            # Midterm Boss (mid-point encounter)
+            encounters[:len(encounters)//2] + [Enemy(base_enemies[3], gpa_scaling[3], "Midterm")] + encounters[len(encounters)//2:]
 
         elif difficulty == "Term 2":
             # Term 2: Enemies scale from 1.0 to 5.3 (5 enemies total)
@@ -216,9 +216,14 @@ class App(ttk.Frame):
         """Deal damage to the enemy and move to the next turn."""
         if self.current_enemy:
             gpa_damage = round(sum(card.value for card in self.selected_classcards) / 4, 1)
-            self.current_enemy.gpa -= gpa_damage  # Subtract the GPA damage
+            self.current_enemy.gpa = round(self.current_enemy.gpa - gpa_damage, 1)  # Subtract the GPA damage
+            self.selected_cards = []  # Clear the current card selection
+            self.selected_classcards = []
+            self.selected = [str(card) for card in self.hand]
+            self.selected_cards_label.config(text="Selected Cards: None")
             self.message_label.config(text=f"Dealt {gpa_damage} GPA damage to {self.current_enemy.name}")
             self.enemy_health_label.config(text=f"Enemy Health: {self.current_enemy.gpa} GPA")  # Update health label
+            self.draw_hand()
 
         # Check if the enemy is defeated
         if self.current_enemy.gpa <= 0:
@@ -228,13 +233,18 @@ class App(ttk.Frame):
             self.next_turn()
 
     def next_encounter(self):
+        self.selected_cards = []  # Clear the current card selection
+        self.selected_classcards = []
+        self.selected = [str(card) for card in self.hand]
         """Move to the next encounter or end the game."""
         if not self.encounters:
             self.game_over("You won!")
             return
 
         self.current_enemy = self.encounters.pop(0)
+        self.selected_cards_label.config(text="Selected Cards: None")
         self.enemy_label.config(text=f"Enemy: {self.current_enemy.name}")
+        self.message_label.config(text="Select 4 cards to deal damage!")
         self.enemy_health_label.config(text=f"Enemy Health: {self.current_enemy.gpa} GPA")  # Display initial enemy health
         self.draw_hand()
 
@@ -279,10 +289,6 @@ class App(ttk.Frame):
         for widget in self.root.winfo_children():
             widget.place_forget()  # Hide any elements that might remain
         self.__init__(self.root)  # Reinitialize the game
-
-
-
-
 
 
 
