@@ -22,7 +22,7 @@ class App(ttk.Frame):
         self.selected_classcards = []
         self.selected = []
         self.confirm_button = None  # Track the confirmation button to avoid duplicates
-        self.card_buttons = []  # List to keep track of card buttons
+        self.card_buttons = {}  # List to keep track of card buttons
         self.wallet = 20
 
         self.start_screen = StartScreen(root, self, tk)
@@ -171,9 +171,11 @@ class App(ttk.Frame):
                 text=f"{card.name}\n({card.grade})",
                 width=self.window_width//70 - 5,  # Fixed width
                 height=5,  # Fixed height
-                command=lambda c=card: self.select_card(c, self.selected)
+                command=lambda c=card: self.select_card(c, self.selected),
+                bg = 'white',
+                fg = 'black'
             )
-            self.card_buttons.append(button)  # Track card buttons
+            self.card_buttons[card] = button  # Track card buttons
             button.pack(side="left", padx=5, pady=5)
 
     def select_card(self, card, hand):
@@ -183,13 +185,13 @@ class App(ttk.Frame):
             hand.append(str(card))
             self.selected_cards.remove(str(card))
             self.selected_classcards.remove(card)
-            
+            self.card_buttons.get(card).config(bg = 'white', fg = 'black')
         else: # Select the card
             if len(self.selected_cards) < 4:  # Limit to 4 cards
                 hand.remove(str(card))
                 self.selected_cards.append(str(card))
                 self.selected_classcards.append(card)
-                print(self.card_buttons)
+                self.card_buttons.get(card).config(bg = 'black', fg = 'white')
 
         # Update the selected cards label
         selected_card_names = [card for card in self.selected_cards]
