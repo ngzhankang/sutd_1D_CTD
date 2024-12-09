@@ -342,7 +342,7 @@ class App(ttk.Frame):
             btn = tk.Button(
                 shop_window,
                 text=f"{item} - ({cost[1]}) - {cost[0]} gold",
-                command=lambda i=item, c=cost[0]: self.purchase_item(i, c, shop_window, items_for_sale)
+                command=lambda i=item, c=cost[0]: [self.purchase_item(i, c, shop_window, items_for_sale), self.deck.append(Card(item, cost[1])), print(*self.deck)]
             )
             btn.pack(pady=3)
 
@@ -388,44 +388,44 @@ class App(ttk.Frame):
         # self.check_victory_condition()
         self.next_encounter()  # Proceed to the next encounter
 
-    def show_shop_window(self):
-        """Open the shop window after defeating the boss."""
-        window = tk.Toplevel(self.root)  # Create a new popup window
-        window.title("Shop")
-        window.geometry("400x300")
+    # def show_shop_window(self):
+    #     """Open the shop window after defeating the boss."""
+    #     window = tk.Toplevel(self.root)  # Create a new popup window
+    #     window.title("Shop")
+    #     window.geometry("400x300")
 
-        # Show the player's current wallet amount
-        tk.Label(window, text=f"Current Gold: {self.wallet}").pack(pady=10)
+    #     # Show the player's current wallet amount
+    #     tk.Label(window, text=f"Current Gold: {self.wallet}").pack(pady=10)
 
-        # Shop Instructions
-        tk.Label(window, text="Choose an option:").pack(pady=5)
+    #     # Shop Instructions
+    #     tk.Label(window, text="Choose an option:").pack(pady=5)
 
-        # Example of items to purchase
-        items = {
-            "Health Potion": 5,
-            "Shield": 10,
-            "Double Attack": 15
-        }
+    #     # Example of items to purchase
+    #     items = {
+    #         "Health Potion": 5,
+    #         "Shield": 10,
+    #         "Double Attack": 15
+    #     }
 
-        buttons = []
+    #     buttons = []
 
-        for item, cost in items.items():
-            btn = tk.Button(window, text=f"{item} - {cost} gold",
-                    command=lambda i=item, c=cost, w=window, b=buttons: self.purchase_item(i, c, w, b))
+    #     for item, cost in items.items():
+    #         btn = tk.Button(window, text=f"{item} - {cost} gold",
+    #                 command=lambda i=item, c=cost, w=window, b=buttons: self.purchase_item(i, c, w, b))
             
-            btn.pack(pady=3)
-            buttons.append(btn)  # Add the button to the tracking list
+    #         btn.pack(pady=3)
+    #         buttons.append(btn)  # Add the button to the tracking list
 
-        # Option to skip shopping
-        skip_btn = tk.Button(window, text="Skip Shop (Receive Bonus Gold)",
-                command=lambda w=window: self.skip_shop(w)).pack(pady=3)
+    #     # Option to skip shopping
+    #     skip_btn = tk.Button(window, text="Skip Shop (Receive Bonus Gold)",
+    #             command=lambda w=window: self.skip_shop(w)).pack(pady=3)
         
-        skip_btn.pack(pady=3)
-        buttons.append(skip_btn)
+    #     skip_btn.pack(pady=3)
+    #     buttons.append(skip_btn)
         
-        # Wait until the shop window closes
-        window.grab_set()  # Prevent interaction with other windows until the shop is closed
-        self.root.wait_window(window)  # Block execution until the shop window is destroyed
+    #     # Wait until the shop window closes
+    #     window.grab_set()  # Prevent interaction with other windows until the shop is closed
+    #     self.root.wait_window(window)  # Block execution until the shop window is destroyed
 
     # def check_victory_condition(self):
     #     """Check if the player has collected all the required cards."""

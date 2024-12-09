@@ -42,7 +42,6 @@ class RandomnizeShopCards:
         for i in range(len(coursework)):
             randomGrade = choice(ownGrade)
             randomnizedShopCards[coursework[i]] = [load_grades(randomGrade), randomGrade]
-        print(randomnizedShopCards)
         return randomnizedShopCards
 
 # create starting deck
