@@ -34,8 +34,8 @@ class Card:
 
 class RandomnizeShopCards:
     def __init__(self):
-        self.name_ls = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
-        self.grade_ls = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+        self.test1 = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
+        self.test2 = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
     
     def shop(self):
         randomnizedShopCards = {}
