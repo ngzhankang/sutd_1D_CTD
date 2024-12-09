@@ -1,6 +1,7 @@
 # import library
 from Card import Card
 import json
+from random import choice
 
 
 def load_config():
@@ -47,3 +48,20 @@ def start_deck():
             Card("Reading", "C-"),
             Card("Quiz", "D")
             ]
+
+
+
+class Cards:
+  def __init__(self):
+    self.name_ls = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presenttion"]
+    self.grade_ls = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+    
+  def hand(self):
+    hand = {}
+    for i in range(len(self.name_ls)):
+      hand[self.name_ls[i]] = choice(self.grade_ls)
+    return hand
+
+cards = Cards()
+hand = cards.hand()
+print(hand)
