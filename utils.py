@@ -24,7 +24,7 @@ def render_deck(courses, grade_dict):
 
 
 class Card:
-	def __init__(self, name, grade, hand):
+	def __init__(self, name, grade):
 		self.name = name
 		self.grade = grade 
 		self.value = load_grades(grade)
