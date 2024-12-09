@@ -159,8 +159,8 @@ class App(ttk.Frame):
             button = tk.Button(
                 self.cards_frame, 
                 text=f"{card.name}\n({card.grade})",
-                width=self.window_width//70,  # Fixed width
-                height=5,  # Fixed height
+                width=self.window_width//70, 
+                height=5,
                 command=lambda c=card: self.select_card(c, self.selected),
                 bg = 'white',
                 fg = 'black',
@@ -197,6 +197,7 @@ class App(ttk.Frame):
 
     def calculate_damage(self):
         """Calculate the damage based on selected cards."""
+        self.buttonclicks = 0
         total_value = sum(card.value for card in self.selected_classcards)
         gpa_damage = round(total_value / 4, 1)
         self.message_label.config(text=f"Calculated Damage: {gpa_damage} GPA")
@@ -216,13 +217,14 @@ class App(ttk.Frame):
         self.confirm_attack_button.config(state=tk.DISABLED)
         self.calculate_button.config(state=tk.DISABLED)
 
-        if self.buttonclicks == 9:
-            print('hi')
+        if self.buttonclicks == 69:
+            self.show_event_window()
 
     def update_count(self):
         self.buttonclicks += 1
 
     def deal_damage(self):
+        self.buttonclicks = 0
         self.calculate_button.config(state=tk.DISABLED)
         self.confirm_attack_button.config(state=tk.DISABLED)
         self.calculate_button.config(state=tk.DISABLED)
