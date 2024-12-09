@@ -1,9 +1,7 @@
 # im gonna mess around with this file so dont mind me(for real)
 # import library
 import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
-import json, copy
+from tkinter import messagebox, ttk
 from random import sample, randint, shuffle
 from utils import *
 from StartScreen import StartScreen
@@ -65,6 +63,9 @@ class App(ttk.Frame):
 
         self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4")
         self.turn_label.grid(row=0, column=3)
+
+        self.wallet_label = tk.Label(self.actions_frame, text=f"Gold: {self.wallet}")
+        self.wallet_label.pack()
 
         self.selected_cards_label = tk.Label(self.actions_frame, text="Selected Cards: None")
         self.selected_cards_label.pack()
