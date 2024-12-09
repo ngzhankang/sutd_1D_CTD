@@ -2,6 +2,7 @@
 # import library
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 import json, copy
 from random import sample, randint
 from utils import load_config, render_deck
@@ -229,7 +230,8 @@ class App(ttk.Frame):
         # Check if the enemy is defeated
         if self.current_enemy.gpa <= 0:
             self.message_label.config(text=f"{self.current_enemy.name} defeated!")
-            self.next_encounter()
+            self.show_shop()
+            # self.next_encounter()
         else:
             self.next_turn()
 
@@ -252,6 +254,9 @@ class App(ttk.Frame):
         self.confirm_attack_button.config(state=tk.DISABLED)
         self.calculate_button.config(state=tk.DISABLED)
 
+         # Ensure game waits after finishing shop
+        self.message_label.config(text="Defeated the boss. Would you like to visit the shop now?")
+
     def next_turn(self):
         """Move to the next turn."""
         if self.current_turn >= self.turn_limit:
@@ -259,6 +264,90 @@ class App(ttk.Frame):
         else:
             self.current_turn += 1
             self.turn_label.config(text=f"Turn: {self.current_turn} / {self.turn_limit}")
+
+    def show_shop(self):
+        """Display a shop after defeating the boss."""
+        # Create a popup window for the shop
+        shop_window = tk.Toplevel(self.root)
+        shop_window.title("Shop")
+        shop_window.geometry("400x300")
+
+        # List of items in the shop
+        items_for_sale = {
+            "Potion": 5,
+            "Gold Boost": 10,
+            "Shield": 8,
+            "Health Elixir": 12
+        }
+
+        # Display the items for sale
+        tk.Label(shop_window, text="Welcome to the shop!", font=("Helvetica", 14)).pack(pady=10)
+
+        for item, cost in items_for_sale.items():
+            btn = tk.Button(
+                shop_window,
+                text=f"{item} - {cost} gold",
+                command=lambda i=item, c=cost: self.purchase_item(i, c, shop_window, items_for_sale)
+            )
+            btn.pack(pady=3)
+
+        # Option to skip shopping
+        skip_button = tk.Button(
+            shop_window,
+            text="Skip and collect bonus gold",
+            command=lambda: self.skip_shop(shop_window)
+        )
+        skip_button.pack(pady=10)
+
+    def purchase_item(self, item, cost, window, items):
+        """Handle item purchase logic."""
+        if self.wallet >= cost:
+            self.wallet -= cost
+            messagebox.showinfo("Purchase Successful", f"Successfully purchased {item}!")
+            window.destroy()
+        else:
+            messagebox.showerror("Not enough gold", "You don't have enough gold for that item!")
+
+        # Allow exiting the shop screen after the choice is made
+        # window.destroy()
+        self.next_encounter()
+
+    def skip_shop(self, window):
+        """Handle skipping the shop and collecting bonus gold."""
+        bonus_gold = 10  # The amount of gold rewarded for skipping
+        self.wallet += bonus_gold
+        messagebox.showinfo("Skip Shop", f"You received {bonus_gold} bonus gold! Total Gold: {self.wallet}")
+        window.destroy()  # Close the shop window
+        self.next_encounter()  # Proceed to the next encounter
+
+    def show_shop_window(self):
+        """Open the shop window after defeating the boss."""
+        window = tk.Toplevel(self.root)  # Create a new popup window
+        window.title("Shop")
+        window.geometry("400x300")
+
+        # Show the player's current wallet amount
+        tk.Label(window, text=f"Current Gold: {self.wallet}", font=("Helvetica", 14)).pack(pady=10)
+
+        # Shop Instructions
+        tk.Label(window, text="Choose an option:").pack(pady=5)
+
+        # Example of items to purchase
+        items = {
+            "Health Potion": 5,
+            "Shield": 10,
+            "Double Attack": 15
+        }
+
+        for item, cost in items.items():
+            tk.Button(window, text=f"{item} - {cost} gold", 
+                    command=lambda i=item, c=cost, w=window: self.purchase_item(i, c, w)).pack(pady=3)
+
+        # Option to skip shopping
+        tk.Button(window, text="Skip Shop (Receive Bonus Gold)", 
+                command=lambda w=window: self.skip_shop(w)).pack(pady=3)
+
+
 
     def game_over(self, message):
         """Handle game over scenario."""
