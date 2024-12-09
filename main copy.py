@@ -8,6 +8,7 @@ from random import sample, randint, shuffle
 from utils import *
 from StartScreen import StartScreen
 from Enemy import Enemy
+import tkinter.font as tkFont
 # from Card import Card
 
 # main logic
@@ -36,6 +37,8 @@ class App(ttk.Frame):
         self.root.update_idletasks()  # Update the window size
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
+        self.font = self.root.Font(family="Old School Adventures", size=12, weight="bold")
+   
 
     def setup_ui(self):
         # Layout Frames
@@ -52,28 +55,28 @@ class App(ttk.Frame):
         self.actions_frame.place(relx=0.5, rely=0.8, anchor="center")  # Position actions frame
 
         # Stats Display
-        self.enemy_label = tk.Label(self.stats_frame, text="Enemy: None")
+        self.enemy_label = tk.Label(self.stats_frame, text="Enemy: None", font=self.font,)
         self.enemy_label.grid(row=0, column=0)
 
-        self.enemy_health_label = tk.Label(self.stats_frame, text="Enemy Health: N/A")  # Display for enemy health
+        self.enemy_health_label = tk.Label(self.stats_frame, text="Enemy Health: N/A", font=self.font,)  # Display for enemy health
         self.enemy_health_label.grid(row=0, column=1)
 
-        self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4")
+        self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4", font=self.font,)
         self.turn_label.grid(row=0, column=3)
 
-        self.selected_cards_label = tk.Label(self.actions_frame, text="Selected Cards: None")
+        self.selected_cards_label = tk.Label(self.actions_frame, text="Selected Cards: None", font=self.font,)
         self.selected_cards_label.pack()
 
-        self.message_label = tk.Label(self.actions_frame, text="Select 4 cards to deal damage!")
+        self.message_label = tk.Label(self.actions_frame, text="Select 4 cards to deal damage!", font=self.font,)
         self.message_label.pack()
 
-        self.reselect_button = tk.Button(self.actions_frame, text="Reselect Cards", command=self.reselect_cards, width=15, height=1)
+        self.reselect_button = tk.Button(self.actions_frame, text="Reselect Cards", font=self.font, command=self.reselect_cards, width=15, height=1)
         self.reselect_button.pack(pady=3)
 
-        self.calculate_button = tk.Button(self.actions_frame, text="Calculate Damage", command=self.calculate_damage, width=15, height=1)
+        self.calculate_button = tk.Button(self.actions_frame, text="Calculate Damage", font=self.font, command=self.calculate_damage, width=15, height=1)
         self.calculate_button.pack(pady=3)
 
-        self.confirm_attack_button = tk.Button(self.actions_frame, text="Confirm Attack", command=self.deal_damage, width=15, height=1)
+        self.confirm_attack_button = tk.Button(self.actions_frame, text="Confirm Attack",font=self.font, command=self.deal_damage, width=15, height=1)
         self.confirm_attack_button.pack(pady=3)
 
     def set_difficulty(self, difficulty):
@@ -158,7 +161,7 @@ class App(ttk.Frame):
                 height=5,  # Fixed height
                 command=lambda c=card: self.select_card(c, self.selected),
                 bg = 'white',
-                fg = 'black'
+                fg = 'black', font=self.font,
             )
             self.card_buttons[card] = button  # Track card buttons
             button.pack(side="left", padx=5, pady=5)
@@ -281,17 +284,17 @@ class App(ttk.Frame):
         event_window.geometry("+%d+%d" % (x, y))
         event_window.deiconify()
 
-        name = tk.Label(event_window, text='(UN)LUCKY')
-        name.place(relx=0.5, rely=0.4, anchor='center')
+        name = tk.Label(event_window, text='(UN)LUCKY', font=self.font)
+        name.place(relx=0.5, rely=0.4, anchor='center', font=self.font)
 
-        addcard = tk.Label(event_window, text='Card with Grade F added to deck!')
+        addcard = tk.Label(event_window, text='Card with Grade F added to deck!'font=self.font)
         addcard.place(relx=0.5, rely=0.5, anchor='center')
        
        
         #do some append to start deck!!!!!!!
 
         
-        btn = tk.Button(event_window, text='RIP :(', command=lambda: self.close_window(event_window))
+        btn = tk.Button(event_window,font=self.font, text='RIP :(', command=lambda: self.close_window(event_window))
         btn.place(relx=0.5, rely=0.6, anchor='center')
 
     def close_window(self, window):
@@ -321,12 +324,12 @@ class App(ttk.Frame):
         shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(shop_window))  # Disable the close button entirely
 
         # Display the items for sale
-        tk.Label(shop_window, text="Welcome to the shop!", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(shop_window, text="Welcome to the shop!", font=self.font).pack(pady=10)
 
         for item, cost in items_for_sale.items():
             btn = tk.Button(
                 shop_window,
-                text=f"{item} - {cost} gold",
+                text=f"{item} - {cost} gold",font=self.font,
                 command=lambda i=item, c=cost: self.purchase_item(i, c, shop_window, items_for_sale)
             )
             btn.pack(pady=3)
@@ -334,7 +337,7 @@ class App(ttk.Frame):
         # Option to skip shopping
         skip_button = tk.Button(
             shop_window,
-            text="Skip and collect bonus gold",
+            text="Skip and collect bonus gold",font=self.font,
             command=lambda: self.skip_shop(shop_window)
         )
         skip_button.pack(pady=10)
@@ -355,7 +358,7 @@ class App(ttk.Frame):
                 btn.config(state=tk.DISABLED)
                 
                 # Optionally, allow them to skip or exit the shop manually
-                tk.Button(window, text="Close Shop", command=lambda: self.skip_shop(window)).pack(pady=3)
+                tk.Button(window, text="Close Shop", font=self.font,command=lambda: self.skip_shop(window)).pack(pady=3)
 
 
         # Allow exiting the shop screen after the choice is made
@@ -378,10 +381,10 @@ class App(ttk.Frame):
         window.geometry("400x300")
 
         # Show the player's current wallet amount
-        tk.Label(window, text=f"Current Gold: {self.wallet}", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(window, text=f"Current Gold: {self.wallet}", font=self.font).pack(pady=10)
 
         # Shop Instructions
-        tk.Label(window, text="Choose an option:").pack(pady=5)
+        tk.Label(window, text="Choose an option:", font=self.font).pack(pady=5)
 
         # Example of items to purchase
         items = {
@@ -393,14 +396,14 @@ class App(ttk.Frame):
         buttons = []
 
         for item, cost in items.items():
-            btn = tk.Button(window, text=f"{item} - {cost} gold", 
+            btn = tk.Button(window, text=f"{item} - {cost} gold", font=self.font,
                     command=lambda i=item, c=cost, w=window, b=buttons: self.purchase_item(i, c, w, b))
             
             btn.pack(pady=3)
             buttons.append(btn)  # Add the button to the tracking list
 
         # Option to skip shopping
-        skip_btn = tk.Button(window, text="Skip Shop (Receive Bonus Gold)", 
+        skip_btn = tk.Button(window, text="Skip Shop (Receive Bonus Gold)", font=self.font,
                 command=lambda w=window: self.skip_shop(w)).pack(pady=3)
         
         skip_btn.pack(pady=3)
@@ -426,7 +429,7 @@ class App(ttk.Frame):
     def game_over_screen(self, message):
         """Display a Game Over screen."""
         # Game Over message
-        game_over_label = tk.Label(self.root, text=message, font=("Helvetica", 24))
+        game_over_label = tk.Label(self.root, text=message, font=self.font)
         game_over_label.place(relx=0.5, rely=0.3, anchor="center")
 
         # Buttons for Quit and Restart
