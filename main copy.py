@@ -360,7 +360,6 @@ class App(ttk.Frame):
             messagebox.showinfo("Purchase Successful", f"Successfully purchased {item}!")
             window.destroy()
             # self.check_victory_condition()
-            self.next_encounter()
         else:
             messagebox.showerror("Not enough gold", "You don't have enough gold for that item!")
 
