@@ -155,6 +155,7 @@ class App(ttk.Frame):
         # Draw 7 cards from the deck
         self.hand = [card for card in sample(self.deck, 7)]
         self.selected = [str(card) for card in self.hand]
+        self.card_buttons = {}
         for card in self.hand:
             button = tk.Button(
                 self.cards_frame, 
