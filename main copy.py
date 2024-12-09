@@ -127,9 +127,7 @@ class App(ttk.Frame):
                 elif i == len(gpa_scaling)//2:
                     encounters.append(Enemy(bosses[0], gpa_scaling[i]))
                 else:
-                    encounters.append(Enemy(base_enemies[random], gpa_scaling[i]))
-                
-                
+                    encounters.append(Enemy(base_enemies[random], gpa_scaling[i]))   
 
         elif difficulty == "Term 2":
             # Term 2: Enemies scale from 1.0 to 5.3 (5 enemies total)
@@ -154,7 +152,7 @@ class App(ttk.Frame):
                     encounters.append(Enemy(bosses[0], gpa_scaling[i]))
                 else:
                     encounters.append(Enemy(base_enemies[random], gpa_scaling[i]))
-                    
+
         return encounters
     
     def start_game(self):
