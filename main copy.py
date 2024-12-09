@@ -229,7 +229,7 @@ class App(ttk.Frame):
         if self.current_enemy.gpa <= 0:
             self.message_label.config(text=f"{self.current_enemy.name} defeated!")
             random = randint(1, 700)
-            if random > 700:
+            if random == 365:
                 self.show_event_window()
             else:
                 self.show_shop()
