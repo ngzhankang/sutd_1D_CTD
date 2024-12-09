@@ -1,7 +1,9 @@
 # im gonna mess around with this file so dont mind me(for real)
 # import library
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
+from tkinter import messagebox
+import json, copy
 from random import sample, randint
 from utils import *
 from StartScreen import StartScreen
@@ -23,7 +25,7 @@ class App(ttk.Frame):
         self.selected_classcards = []
         self.selected = []
         self.confirm_button = None  # Track the confirmation button to avoid duplicates
-        self.card_buttons = {}  # List to keep track of card buttons
+        self.card_buttons = []  # List to keep track of card buttons
         self.wallet = 20
 
         self.start_screen = StartScreen(root, self, tk)
@@ -152,13 +154,11 @@ class App(ttk.Frame):
             button = tk.Button(
                 self.cards_frame, 
                 text=f"{card.name}\n({card.grade})",
-                width=self.window_width//70 - 5,  # Fixed width
+                width=28,  # Fixed width
                 height=5,  # Fixed height
-                command=lambda c=card: self.select_card(c, self.selected),
-                bg = 'white',
-                fg = 'black'
+                command=lambda c=card: self.select_card(c, self.selected)
             )
-            self.card_buttons[card] = button  # Track card buttons
+            self.card_buttons.append(button)  # Track card buttons
             button.pack(side="left", padx=5, pady=5)
 
     def select_card(self, card, hand):
@@ -168,13 +168,11 @@ class App(ttk.Frame):
             hand.append(str(card))
             self.selected_cards.remove(str(card))
             self.selected_classcards.remove(card)
-            self.card_buttons.get(card).config(bg = 'white', fg = 'black')
         else: # Select the card
             if len(self.selected_cards) < 4:  # Limit to 4 cards
                 hand.remove(str(card))
                 self.selected_cards.append(str(card))
                 self.selected_classcards.append(card)
-                self.card_buttons.get(card).config(bg = 'black', fg = 'white')
 
         # Update the selected cards label
         selected_card_names = [card for card in self.selected_cards]
@@ -208,6 +206,9 @@ class App(ttk.Frame):
         self.calculate_button.config(state=tk.DISABLED)
 
     def deal_damage(self):
+        self.calculate_button.config(state=tk.DISABLED)
+        self.confirm_attack_button.config(state=tk.DISABLED)
+        self.calculate_button.config(state=tk.DISABLED)
         """Deal damage to the enemy and move to the next turn."""
         if self.current_enemy:
             gpa_damage = round(sum(card.value for card in self.selected_classcards) / 4, 1)
@@ -237,7 +238,9 @@ class App(ttk.Frame):
             self.game_over("You won!")
             return
 
+        self.current_turn = 1
         self.current_enemy = self.encounters.pop(0)
+        self.turn_label.config(text=f"Turn: {self.current_turn} / {self.turn_limit}")
         self.selected_cards_label.config(text="Selected Cards: None")
         self.enemy_label.config(text=f"Enemy: {self.current_enemy.name}")
         self.message_label.config(text="Select 4 cards to deal damage!")
@@ -317,7 +320,6 @@ class App(ttk.Frame):
                 tk.Button(window, text="Close Shop", command=lambda: self.skip_shop(window)).pack(pady=3)
 
 
-
         # Allow exiting the shop screen after the choice is made
         # window.destroy()
         self.next_encounter()
@@ -374,7 +376,6 @@ class App(ttk.Frame):
         """Check if the player has collected all the required cards."""
         if not self.encounters:
             self.game_over_screen("Victory! You conquered all challenges!")
-
 
 
     def game_over(self, message):
