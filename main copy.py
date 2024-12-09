@@ -186,8 +186,7 @@ class App(ttk.Frame):
                 self.card_buttons.get(card).config(bg = 'black', fg = 'white')
 
         # Update the selected cards label
-        selected_card_names = [card for card in self.selected_cards]
-        self.selected_cards_label.config(text=f"Selected Cards: {', '.join(selected_card_names)}")
+        self.selected_cards_label.config(text=f"Selected Cards: {', '.join(self.selected_cards)}")
 
         # Enable "Calculate Damage" buttons if cards are selected
         if len(self.selected_cards) == 4:
