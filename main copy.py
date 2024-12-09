@@ -8,7 +8,7 @@ from random import sample, randint
 from utils import *
 from StartScreen import StartScreen
 from Enemy import Enemy
-from Card import Card
+# from Card import Card
 
 # main logic
 class App(ttk.Frame):
