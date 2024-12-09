@@ -183,11 +183,13 @@ class App(ttk.Frame):
             hand.append(str(card))
             self.selected_cards.remove(str(card))
             self.selected_classcards.remove(card)
+            
         else: # Select the card
             if len(self.selected_cards) < 4:  # Limit to 4 cards
                 hand.remove(str(card))
                 self.selected_cards.append(str(card))
                 self.selected_classcards.append(card)
+                print(self.card_buttons)
 
         # Update the selected cards label
         selected_card_names = [card for card in self.selected_cards]
@@ -259,9 +261,6 @@ class App(ttk.Frame):
 
         self.confirm_attack_button.config(state=tk.DISABLED)
         self.calculate_button.config(state=tk.DISABLED)
-
-         # Ensure game waits after finishing shop
-        self.message_label.config(text="Defeated the boss. Would you like to visit the shop now?")
 
     def next_turn(self):
         """Move to the next turn."""
