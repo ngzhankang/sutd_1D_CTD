@@ -153,7 +153,7 @@ class App(ttk.Frame):
         for card in self.hand:
             button = tk.Button(
                 self.cards_frame, 
-                text=f"{card[0]}\n({card[1]})",
+                text=f"{card.name}\n({card.grade})",
                 width=28,  # Fixed width
                 height=5,  # Fixed height
                 command=lambda c=card: self.select_card(c, self.selected),

@@ -30,21 +30,29 @@ def shuffle_deck():
 def card(name, grade):
     return name, grade
 
+class Card:
+	def __init__(self, name, grade):
+		self.name = name
+		self.grade = grade 
+		self.value = load_grades(grade)
+
+	def __str__(self):
+		return f"{self.name} ({self.grade})"
 
 # create starting deck
 def start_deck():
     return [
-            card("Homework", "B"),
-            card("Study", "C"),
-            card("Project", "D"),
-            card("Research", "C"),
-            card("Extra Credit", "B"),
-            card("Extra Work", "B-"),
-            card("Essay", "B-"),
-            card("Lab Work", "C+"),
-            card("Finals", "C+"),
-            card("Midterm", "C"),
-            card("Group Project", "C-"),
-            card("Reading", "C-"),
-            card("Quiz", "D")
+            Card("Homework", "B"),
+            Card("Study", "C"),
+            Card("Project", "D"),
+            Card("Research", "C"),
+            Card("Extra Credit", "B"),
+            Card("Extra Work", "B-"),
+            Card("Essay", "B-"),
+            Card("Lab Work", "C+"),
+            Card("Finals", "C+"),
+            Card("Midterm", "C"),
+            Card("Group Project", "C-"),
+            Card("Reading", "C-"),
+            Card("Quiz", "D")
             ]
