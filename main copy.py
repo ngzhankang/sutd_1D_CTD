@@ -105,9 +105,12 @@ class App(ttk.Frame):
         base_enemies = [
             "Homework",  
             "Project",   
-            "Research",  
-            "Midterm Boss",  # Midterm Boss
-            "Finals Boss"   # Final Boss
+            "Research"
+        ]
+
+        bosses = [
+            "Midterms",
+            "Finals"
         ]
 
         # Start with an empty list of encounters
@@ -117,33 +120,41 @@ class App(ttk.Frame):
         if difficulty == "Term 1":
             # Term 1: Enemies scale from 1.0 to 5.3 (6 enemies total)
             gpa_scaling = [1.0, 1.8, 2.5, 3.1, 4.0, 5.3]
-            for i in range(4):
-                encounters.append(Enemy(base_enemies[i], gpa_scaling[i], "Regular"))
-            # Finals Boss
-            encounters.append(Enemy(base_enemies[4], gpa_scaling[5], "Finals"))
-            # Midterm Boss (mid-point encounter)
-            encounters[:len(encounters)//2] + [Enemy(base_enemies[3], gpa_scaling[3], "Midterm")] + encounters[len(encounters)//2:]
+            for i in range(len(gpa_scaling)):
+                random = randint(0, len(base_enemies)-1)
+                if i == len(gpa_scaling)-1:
+                    encounters.append(Enemy(bosses[1], gpa_scaling[i]))
+                elif i == len(gpa_scaling)//2:
+                    encounters.append(Enemy(bosses[0], gpa_scaling[i]))
+                else:
+                    encounters.append(Enemy(base_enemies[random], gpa_scaling[i]))
+                
+                
 
         elif difficulty == "Term 2":
             # Term 2: Enemies scale from 1.0 to 5.3 (5 enemies total)
             gpa_scaling = [1.0, 2.0, 2.8, 3.5, 5.3]
-            for i in range(3):
-                encounters.append(Enemy(base_enemies[i], gpa_scaling[i], "Regular"))
-            # Midterm Boss (mid-point encounter)
-            encounters.append(Enemy(base_enemies[3], gpa_scaling[3], "Midterm"))
-            # Finals Boss
-            encounters.append(Enemy(base_enemies[4], gpa_scaling[4], "Finals"))
+            for i in range(len(gpa_scaling)):
+                random = randint(0, len(base_enemies)-1)
+                if i == len(gpa_scaling)-1:
+                    encounters.append(Enemy(bosses[1], gpa_scaling[i]))
+                elif i == len(gpa_scaling)//2:
+                    encounters.append(Enemy(bosses[0], gpa_scaling[i]))
+                else:
+                    encounters.append(Enemy(base_enemies[random], gpa_scaling[i]))
 
         elif difficulty == "Term 3":
             # Term 3: Enemies scale from 1.0 to 5.3 (4 enemies total)
             gpa_scaling = [1.0, 2.5, 4.0, 5.3]
-            for i in range(2):
-                encounters.append(Enemy(base_enemies[i], gpa_scaling[i], "Regular"))
-            # Midterm Boss (mid-point encounter)
-            encounters.append(Enemy(base_enemies[3], gpa_scaling[2], "Midterm"))
-            # Finals Boss
-            encounters.append(Enemy(base_enemies[4], gpa_scaling[3], "Finals"))
-
+            for i in range(len(gpa_scaling)):
+                random = randint(0, len(base_enemies)-1)
+                if i == len(gpa_scaling)-1:
+                    encounters.append(Enemy(bosses[1], gpa_scaling[i]))
+                elif i == len(gpa_scaling)//2:
+                    encounters.append(Enemy(bosses[0], gpa_scaling[i]))
+                else:
+                    encounters.append(Enemy(base_enemies[random], gpa_scaling[i]))
+                    
         return encounters
     
     def start_game(self):
