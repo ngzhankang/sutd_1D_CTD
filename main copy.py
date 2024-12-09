@@ -230,7 +230,6 @@ class App(ttk.Frame):
             self.message_label.config(text=f"{self.current_enemy.name} defeated!")
             random = randint(1, 700)
             if random < 700:
-                print('hi')
                 self.show_event_window()
             else:
                 self.show_shop()
@@ -277,13 +276,21 @@ class App(ttk.Frame):
         event_window = tk.Toplevel(self.root)  # Create a new popup window
         event_window.title("Special Event")
         event_window.geometry("400x300")
+        x = (event_window.winfo_screenwidth() - event_window.winfo_reqwidth()) / 2 - 100
+        y = (event_window.winfo_screenheight() - event_window.winfo_reqheight()) / 2 - 100
+        event_window.geometry("+%d+%d" % (x, y))
+        event_window.deiconify()
 
         name = tk.Label(event_window, text='(UN)LUCKY')
         name.place(relx=0.5, rely=0.4, anchor='center')
 
-        addcard = tk.Label(event_window, text='You ')
+        addcard = tk.Label(event_window, text='Card with Grade F added to deck!')
         addcard.place(relx=0.5, rely=0.5, anchor='center')
+       
+       
+        #do some append to start deck!!!!!!!
 
+        
         btn = tk.Button(event_window, text='RIP :(', command=lambda: self.close_window(event_window))
         btn.place(relx=0.5, rely=0.6, anchor='center')
 
@@ -297,7 +304,10 @@ class App(ttk.Frame):
         shop_window = tk.Toplevel(self.root)
         shop_window.title("Shop")
         shop_window.geometry("400x300")
-        # shop_window.eval('tk::PlaceWindow . center')
+        x = (shop_window.winfo_screenwidth() - shop_window.winfo_reqwidth()) / 2 - 100
+        y = (shop_window.winfo_screenheight() - shop_window.winfo_reqheight()) / 2 - 100
+        shop_window.geometry("+%d+%d" % (x, y))
+        shop_window.deiconify()
 
         # List of items in the shop
         items_for_sale = {
