@@ -1,6 +1,4 @@
-# import library
-# from Card import Card
-import json
+# import libraryimport json
 from random import choice
 
 
@@ -24,13 +22,6 @@ def render_deck(courses, grade_dict):
     courelist = list(courses[termstr][0].keys())
 
 
-# shuffle existing deck
-def shuffle_deck():
-
-    pass
-def card(name, grade):
-    return name, grade
-
 class Card:
 	def __init__(self, name, grade, hand):
 		self.name = name
@@ -53,6 +44,7 @@ class RandomnizeShopCards:
 
 # create starting deck
 def start_deck():
+
     return [
             Card("Homework", "B"),
             Card("Study", "C"),
@@ -68,7 +60,6 @@ def start_deck():
             Card("Reading", "C-"),
             Card("Quiz", "D")
             ]
-
 
 
 class Cards:
