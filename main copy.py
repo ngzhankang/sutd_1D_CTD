@@ -29,6 +29,7 @@ class App(ttk.Frame):
         self.card_buttons = {}  # List to keep track of card buttons
         self.wallet = 20
         self.tkFont = tkFont
+        self.buttonclicks = 0
 
         self.start_screen = StartScreen(root, self, tk)
 
@@ -71,7 +72,7 @@ class App(ttk.Frame):
         self.message_label = tk.Label(self.actions_frame, text="Select 4 cards to deal damage!")
         self.message_label.pack()
 
-        self.reselect_button = tk.Button(self.actions_frame, text="Reselect Cards", command=self.reselect_cards, width=15, height=1)
+        self.reselect_button = tk.Button(self.actions_frame, text="Reselect Cards", command=lambda:[self.update_count(), self.reselect_cards()], width=15, height=1)
         self.reselect_button.pack(pady=3)
 
         self.calculate_button = tk.Button(self.actions_frame, text="Calculate Damage", command=self.calculate_damage, width=15, height=1)
@@ -203,6 +204,8 @@ class App(ttk.Frame):
 
     def reselect_cards(self):
         """Reselect the player's cards by resetting the selected cards and allowing them to pick again."""
+        for key in self.card_buttons.keys():
+            self.card_buttons.get(key).config(bg = 'white', fg = 'black')
         self.selected_cards = []  # Clear the current card selection
         self.selected_classcards = []
         self.selected = [str(card) for card in self.hand]
@@ -212,6 +215,12 @@ class App(ttk.Frame):
         # Disable the "Next Turn" and "Calculate Damage" buttons until cards are selected
         self.confirm_attack_button.config(state=tk.DISABLED)
         self.calculate_button.config(state=tk.DISABLED)
+
+        if self.buttonclicks == 9:
+            print('hi')
+
+    def update_count(self):
+        self.buttonclicks += 1
 
     def deal_damage(self):
         self.calculate_button.config(state=tk.DISABLED)
