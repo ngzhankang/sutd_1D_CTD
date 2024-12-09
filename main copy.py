@@ -358,6 +358,7 @@ class App(ttk.Frame):
         """Handle item purchase logic."""
         if self.wallet >= cost:
             self.wallet -= cost
+            self.wallet_label.config(text=f"Gold: {self.wallet}")
             messagebox.showinfo("Purchase Successful", f"Successfully purchased {item}!")
             window.destroy()
             # self.check_victory_condition()
@@ -381,6 +382,7 @@ class App(ttk.Frame):
         """Handle skipping the shop and collecting bonus gold."""
         bonus_gold = 5  # The amount of gold rewarded for skipping
         self.wallet += bonus_gold
+        self.wallet_label.config(text=f"Gold: {self.wallet}")
         messagebox.showinfo("Skip Shop", f"You received {bonus_gold} bonus gold! Total Gold: {self.wallet}")
         window.destroy()  # Close the shop window
         # self.check_victory_condition()
