@@ -274,6 +274,12 @@ class App(ttk.Frame):
             self.current_turn += 1
             self.turn_label.config(text=f"Turn: {self.current_turn} / {self.turn_limit}")
 
+    def confirm_close(self, window):
+        result = tk.messagebox.askyesno("Confirm", "Are you sure you want to exit the shop?")
+        if result:
+            self.skip_shop(window)
+            # If 'No', simply return and let the user stay in the shop window
+
     def show_shop(self):
         """Display a shop after defeating the boss."""
         # Create a popup window for the shop
@@ -288,6 +294,9 @@ class App(ttk.Frame):
             "Shield": 8,
             "Health Elixir": 12
         }
+
+        # Prevent user from closing the window with the X button
+        shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(shop_window))  # Disable the close button entirely
 
         # Display the items for sale
         tk.Label(shop_window, text="Welcome to the shop!", font=("Helvetica", 14)).pack(pady=10)
