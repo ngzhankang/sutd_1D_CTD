@@ -232,7 +232,7 @@ class App(ttk.Frame):
         if self.current_enemy.gpa <= 0:
             self.message_label.config(text=f"{self.current_enemy.name} defeated!")
             random = randint(1, 700)
-            if random < 700:
+            if random == 365:
                 self.show_event_window()
             else:
                 self.show_shop()
@@ -274,6 +274,10 @@ class App(ttk.Frame):
             self.skip_shop(window)
             # If 'No', simply return and let the user stay in the shop window
 
+    def close_window(self, window):
+        window.destroy()  # Close the shop window
+        self.next_encounter()  # Proceed to the next encounter
+
     def show_event_window(self):
         """Open event window"""
         event_window = tk.Toplevel(self.root)  # Create a new popup window
@@ -284,22 +288,19 @@ class App(ttk.Frame):
         event_window.geometry("+%d+%d" % (x, y))
         event_window.deiconify()
 
-        name = tk.Label(event_window, text='(UN)LUCKY', font=self.font)
+        name = tk.Label(event_window, text='(UN)LUCKY??', font=self.font)
         name.place(relx=0.5, rely=0.4, anchor='center', font=self.font)
 
         addcard = tk.Label(event_window, text='Card with Grade F added to deck!'font=self.font)
         addcard.place(relx=0.5, rely=0.5, anchor='center')
-       
-       
-        #do some append to start deck!!!!!!!
 
-        
+        self.deck.append(Card("F*CKED UP", "F"))
+
         btn = tk.Button(event_window,font=self.font, text='RIP :(', command=lambda: self.close_window(event_window))
         btn.place(relx=0.5, rely=0.6, anchor='center')
 
-    def close_window(self, window):
-        window.destroy()  # Close the shop window
-        self.next_encounter()  # Proceed to the next encounter
+        # Prevent user from closing the window with the X button
+        event_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event_window))  # Disable the close button entirely
 
     def show_shop(self):
         """Display a shop after defeating the boss."""
