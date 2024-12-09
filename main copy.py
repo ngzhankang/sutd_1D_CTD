@@ -291,7 +291,7 @@ class App(ttk.Frame):
         name = tk.Label(event_window, text='(UN)LUCKY??', font=self.font)
         name.place(relx=0.5, rely=0.4, anchor='center', font=self.font)
 
-        addcard = tk.Label(event_window, text='Card with Grade F added to deck!'font=self.font)
+        addcard = tk.Label(event_window, text='Card with Grade F added to deck!', font=self.font)
         addcard.place(relx=0.5, rely=0.5, anchor='center')
 
         self.deck.append(Card("F*CKED UP", "F"))
