@@ -3,25 +3,16 @@ import json
 from random import choice
 
 
-def load_config():
-    # load datas
-    with open('.datafiles/info.json', 'r') as file1, \
-         open('datafiles/grades.json', 'r') as file2:
-        courses, grade_dict = json.load(file1), json.load(file2)
-        return courses, grade_dict
+# def load_config():
+#     # load datas
+#     with open('.datafiles/info.json', 'r') as file1, \
+#          open('datafiles/grades.json', 'r') as file2:
+#         courses, grade_dict = json.load(file1), json.load(file2)
+#         return courses, grade_dict
 
 def load_grades(grade):
     with open('./datafiles/grades.json', 'r') as file:
         return json.load(file)[grade]
-
-
-### DECK UTILITY FUNCTIONS
-
-
-def render_deck(courses, grade_dict):
-    termstr = 'Term ' + str(term)
-    courelist = list(courses[termstr][0].keys())
-
 
 class Card:
 	def __init__(self, name, grade):
@@ -64,17 +55,16 @@ def start_deck():
             ]
 
 
-class Cards:
-  def __init__(self):
-    self.name_ls = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
-    self.grade_ls = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+# class Cards:
+#   def __init__(self):
+#     self.name_ls = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
+#     self.grade_ls = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
     
-  def hand(self):
-    hand = {}
-    for i in range(len(self.name_ls)):
-      hand[self.name_ls[i]] = choice(self.grade_ls)
-    return hand
+#   def hand(self):
+#     hand = {}
+#     for i in range(len(self.name_ls)):
+#       hand[self.name_ls[i]] = choice(self.grade_ls)
+#     return hand
 
-cards = Cards()
-hand = cards.hand()
-# print(hand)
+# cards = Cards()
+# hand = cards.hand()
