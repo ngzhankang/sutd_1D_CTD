@@ -319,7 +319,7 @@ class App(ttk.Frame):
         # Create a popup window for the shop
         shop_window = tk.Toplevel(self.root)
         shop_window.title("Shop")
-        shop_window.geometry("400x300")
+        shop_window.geometry("400x500")
         x = (shop_window.winfo_screenwidth() - shop_window.winfo_reqwidth()) / 2 - 100
         y = (shop_window.winfo_screenheight() - shop_window.winfo_reqheight()) / 2 - 100
         shop_window.geometry("+%d+%d" % (x, y))
