@@ -286,7 +286,7 @@ class App(ttk.Frame):
         event_window.geometry("+%d+%d" % (x, y))
         event_window.deiconify()
 
-        name = tk.Label(event_window, text='(UN)LUCKY')
+        name = tk.Label(event_window, text='(UN)LUCKY??')
         name.place(relx=0.5, rely=0.4, anchor='center')
 
         addcard = tk.Label(event_window, text='Card with Grade F added to deck!')
