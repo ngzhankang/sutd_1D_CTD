@@ -3,6 +3,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from random import sample, randint
+from utils import *
 from StartScreen import StartScreen
 from Enemy import Enemy
 from Card import Card
@@ -13,7 +14,7 @@ class App(ttk.Frame):
         self.root = root
         self.turn_limit = 4  # Start with 4 turns for the first encounter
         self.current_turn = 1
-        self.deck = self.create_deck()
+        self.deck = start_deck()
         self.hand = []
         self.current_enemy = None
         self.encounters = []
@@ -77,24 +78,6 @@ class App(ttk.Frame):
         self.difficulty = difficulty
         # Based on difficulty, create different encounters
         self.encounters = self.create_encounters(difficulty)
-
-    def create_deck(self):
-        """Create the player's starting deck with grades mapped to GPA values"""
-        return [
-            Card("Homework", "B"),
-            Card("Study", "C"),
-            Card("Project", "D"),
-            Card("Research", "C"),
-            Card("Extra Credit", "B"),
-            Card("Extra Work", "B-"),
-            Card("Essay", "B-"),
-            Card("Lab Work", "C+"),
-            Card("Finals", "C+"),
-            Card("Midterm", "C"),
-            Card("Group Project", "C-"),
-            Card("Reading", "C-"),
-            Card("Quiz", "D")
-        ]
     
     def create_encounters(self, difficulty):
         """Create different encounters based on the difficulty."""
