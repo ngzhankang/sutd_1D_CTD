@@ -328,9 +328,9 @@ class App(ttk.Frame):
         shop_window.deiconify()
 
         # List of items in the shop
-        test1 = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
-        test2 = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
-        items_for_sale = RandomnizeShopCards.shop(root, test1, test2)
+        coursework = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
+        ownGrade = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+        items_for_sale = RandomnizeShopCards.shop(root, coursework, ownGrade)
 
         # Prevent user from closing the window with the X button
         shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(shop_window))  # Disable the close button entirely

@@ -33,15 +33,14 @@ class Card:
 		return f"{self.name} ({self.grade})"
 
 class RandomnizeShopCards:
-    def __init__(self, test1, test2):
-        self.test1 = test1
-        self.test2 = test2
+    def __init__(self, coursework, ownGrade):
+        self.coursework = coursework
+        self.ownGrade = ownGrade
     
-    def shop(self, test1, test2):
+    def shop(self, coursework, ownGrade):
         randomnizedShopCards = {}
-        for i in range(len(test1)):
-            randomnizedShopCards[test1[i]] = choice(test2)
-        print(randomnizedShopCards)
+        for i in range(len(coursework)):
+            randomnizedShopCards[coursework[i]] = load_grades(choice(ownGrade))
         return randomnizedShopCards
 
 # create starting deck
