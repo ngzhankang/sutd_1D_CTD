@@ -240,8 +240,12 @@ class App(ttk.Frame):
         # Check if the enemy is defeated
         if self.current_enemy.gpa <= 0:
             self.message_label.config(text=f"{self.current_enemy.name} defeated!")
-            self.show_shop()
-            # self.next_encounter()
+            random = randint(1, 700)
+            if random > 700:
+                print('hi')
+                self.show_event_window()
+            else:
+                self.show_shop()
         else:
             self.next_turn()
 
@@ -277,6 +281,24 @@ class App(ttk.Frame):
         if result:
             self.skip_shop(window)
             # If 'No', simply return and let the user stay in the shop window
+
+    def show_event_window(self):
+        """Open event window"""
+        window = tk.Toplevel(self.root)  # Create a new popup window
+        window.title("Event")
+        window.geometry("400x300")
+
+        tk.Label(window, text='Special Event!!')
+
+        # Shop Instructions
+        tk.Label(window, text="Choose an option:").pack(pady=5)
+
+        btn = tk.Button(window, text='ok', command=lambda: self.close_window(window))
+        btn.pack(pady=3)
+
+    def close_window(self, window):
+        window.destroy()  # Close the shop window
+        self.next_encounter()  # Proceed to the next encounter
 
     def show_shop(self):
         """Display a shop after defeating the boss."""
@@ -321,7 +343,8 @@ class App(ttk.Frame):
             self.wallet -= cost
             messagebox.showinfo("Purchase Successful", f"Successfully purchased {item}!")
             window.destroy()
-            self.check_victory_condition()
+            # self.check_victory_condition()
+            self.next_encounter()
         else:
             messagebox.showerror("Not enough gold", "You don't have enough gold for that item!")
 
@@ -331,8 +354,6 @@ class App(ttk.Frame):
                 
                 # Optionally, allow them to skip or exit the shop manually
                 tk.Button(window, text="Close Shop", command=lambda: self.skip_shop(window)).pack(pady=3)
-
-
 
         # Allow exiting the shop screen after the choice is made
         # window.destroy()
@@ -344,7 +365,7 @@ class App(ttk.Frame):
         self.wallet += bonus_gold
         messagebox.showinfo("Skip Shop", f"You received {bonus_gold} bonus gold! Total Gold: {self.wallet}")
         window.destroy()  # Close the shop window
-        self.check_victory_condition()
+        # self.check_victory_condition()
         self.next_encounter()  # Proceed to the next encounter
 
     def show_shop_window(self):
@@ -386,12 +407,10 @@ class App(ttk.Frame):
         window.grab_set()  # Prevent interaction with other windows until the shop is closed
         self.root.wait_window(window)  # Block execution until the shop window is destroyed
 
-    def check_victory_condition(self):
-        """Check if the player has collected all the required cards."""
-        if not self.encounters:
-            self.game_over_screen("Victory! You conquered all challenges!")
-
-
+    # def check_victory_condition(self):
+    #     """Check if the player has collected all the required cards."""
+    #     if not self.encounters:
+    #         self.game_over_screen("Victory! You conquered all challenges!")
 
     def game_over(self, message):
         """Handle game over scenario."""
