@@ -4,10 +4,14 @@ class StartScreen:
         self.game = game
         self.tk = tk
         self.root.title("Choose Your Difficulty")
+        self.photo = self.tk.PhotoImage(file="./assets/bgimage.png")
         self.setup_ui()
 
     def setup_ui(self):
         # Layout for difficulty selection
+        pic_label = self.tk.Label(self.root, image=self.photo)
+        pic_label.pack()
+
         self.welcome_label = self.tk.Label(self.root, text="'Study Up Till Death'", font=("Old School Adventures", 32))
         self.welcome_label.place(relx=0.5, rely=0.2, anchor="center")  # Center the title label
 
