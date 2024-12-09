@@ -26,7 +26,7 @@ class App(ttk.Frame):
         self.selected = []
         self.confirm_button = None  # Track the confirmation button to avoid duplicates
         self.card_buttons = []  # List to keep track of card buttons
-        self.wallet = 0
+        self.wallet = 20
 
         self.start_screen = StartScreen(root, self, tk)
 
@@ -299,14 +299,24 @@ class App(ttk.Frame):
         )
         skip_button.pack(pady=10)
 
-    def purchase_item(self, item, cost, window, items):
+    def purchase_item(self, item, cost, window, buttons):
         """Handle item purchase logic."""
         if self.wallet >= cost:
             self.wallet -= cost
             messagebox.showinfo("Purchase Successful", f"Successfully purchased {item}!")
             window.destroy()
+            self.check_victory_condition()
         else:
             messagebox.showerror("Not enough gold", "You don't have enough gold for that item!")
+
+            # Disable all buttons to prevent retry spamming
+            for btn in buttons:
+                btn.config(state=tk.DISABLED)
+                
+                # Optionally, allow them to skip or exit the shop manually
+                tk.Button(window, text="Close Shop", command=lambda: self.skip_shop(window)).pack(pady=3)
+
+
 
         # Allow exiting the shop screen after the choice is made
         # window.destroy()
@@ -314,10 +324,11 @@ class App(ttk.Frame):
 
     def skip_shop(self, window):
         """Handle skipping the shop and collecting bonus gold."""
-        bonus_gold = 10  # The amount of gold rewarded for skipping
+        bonus_gold = 5  # The amount of gold rewarded for skipping
         self.wallet += bonus_gold
         messagebox.showinfo("Skip Shop", f"You received {bonus_gold} bonus gold! Total Gold: {self.wallet}")
         window.destroy()  # Close the shop window
+        self.check_victory_condition()
         self.next_encounter()  # Proceed to the next encounter
 
     def show_shop_window(self):
@@ -339,13 +350,30 @@ class App(ttk.Frame):
             "Double Attack": 15
         }
 
+        buttons = []
+
         for item, cost in items.items():
-            tk.Button(window, text=f"{item} - {cost} gold", 
-                    command=lambda i=item, c=cost, w=window: self.purchase_item(i, c, w)).pack(pady=3)
+            btn = tk.Button(window, text=f"{item} - {cost} gold", 
+                    command=lambda i=item, c=cost, w=window, b=buttons: self.purchase_item(i, c, w, b))
+            
+            btn.pack(pady=3)
+            buttons.append(btn)  # Add the button to the tracking list
 
         # Option to skip shopping
-        tk.Button(window, text="Skip Shop (Receive Bonus Gold)", 
+        skip_btn = tk.Button(window, text="Skip Shop (Receive Bonus Gold)", 
                 command=lambda w=window: self.skip_shop(w)).pack(pady=3)
+        
+        skip_btn.pack(pady=3)
+        buttons.append(skip_btn)
+        
+        # Wait until the shop window closes
+        window.grab_set()  # Prevent interaction with other windows until the shop is closed
+        self.root.wait_window(window)  # Block execution until the shop window is destroyed
+
+    def check_victory_condition(self):
+        """Check if the player has collected all the required cards."""
+        if not self.encounters:
+            self.game_over_screen("Victory! You conquered all challenges!")
 
 
 
@@ -353,7 +381,7 @@ class App(ttk.Frame):
         """Handle game over scenario."""
         # Hide the game elements and show the game over screen
         for widget in self.root.winfo_children():
-            widget.place_forget()
+            widget.destroy()
 
         self.game_over_screen(message)
 
