@@ -310,12 +310,7 @@ class App(ttk.Frame):
         shop_window.deiconify()
 
         # List of items in the shop
-        items_for_sale = {
-            "Potion": 5,
-            "Gold Boost": 10,
-            "Shield": 8,
-            "Health Elixir": 12
-        }
+        items_for_sale = RandomnizeShopCards()
 
         # Prevent user from closing the window with the X button
         shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(shop_window))  # Disable the close button entirely
