@@ -62,7 +62,7 @@ def start_deck():
 
 class Cards:
   def __init__(self):
-    self.name_ls = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presenttion"]
+    self.name_ls = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
     self.grade_ls = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
     
   def hand(self):
