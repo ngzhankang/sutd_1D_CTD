@@ -169,7 +169,7 @@ class App(ttk.Frame):
             button = tk.Button(
                 self.cards_frame, 
                 text=f"{card.name}\n({card.grade})",
-                width=28,  # Fixed width
+                width=self.window_width//70 - 5,  # Fixed width
                 height=5,  # Fixed height
                 command=lambda c=card: self.select_card(c, self.selected)
             )
