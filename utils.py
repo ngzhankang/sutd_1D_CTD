@@ -1,4 +1,5 @@
-# import libraryimport json
+# import library
+import json
 from random import choice
 
 
