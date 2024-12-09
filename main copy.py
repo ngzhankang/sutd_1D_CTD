@@ -224,6 +224,7 @@ class App(ttk.Frame):
         self.calculate_button.config(state=tk.DISABLED)
 
     def deal_damage(self):
+        self.calculate_button.config(state=tk.DISABLED)
         self.confirm_attack_button.config(state=tk.DISABLED)
         self.calculate_button.config(state=tk.DISABLED)
         """Deal damage to the enemy and move to the next turn."""
