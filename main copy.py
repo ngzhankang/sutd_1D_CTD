@@ -229,7 +229,7 @@ class App(ttk.Frame):
         if self.current_enemy.gpa <= 0:
             self.message_label.config(text=f"{self.current_enemy.name} defeated!")
             random = randint(1, 700)
-            if random > 700:
+            if random < 700:
                 print('hi')
                 self.show_event_window()
             else:
@@ -274,17 +274,18 @@ class App(ttk.Frame):
 
     def show_event_window(self):
         """Open event window"""
-        window = tk.Toplevel(self.root)  # Create a new popup window
-        window.title("Event")
-        window.geometry("400x300")
+        event_window = tk.Toplevel(self.root)  # Create a new popup window
+        event_window.title("Special Event")
+        event_window.geometry("400x300")
 
-        tk.Label(window, text='Special Event!!')
+        name = tk.Label(event_window, text='(UN)LUCKY')
+        name.place(relx=0.5, rely=0.4, anchor='center')
 
-        # Shop Instructions
-        tk.Label(window, text="Choose an option:").pack(pady=5)
+        addcard = tk.Label(event_window, text='You ')
+        addcard.place(relx=0.5, rely=0.5, anchor='center')
 
-        btn = tk.Button(window, text='ok', command=lambda: self.close_window(window))
-        btn.pack(pady=3)
+        btn = tk.Button(event_window, text='RIP :(', command=lambda: self.close_window(event_window))
+        btn.place(relx=0.5, rely=0.6, anchor='center')
 
     def close_window(self, window):
         window.destroy()  # Close the shop window
