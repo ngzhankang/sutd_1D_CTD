@@ -4,7 +4,7 @@ class StartScreen:
         self.game = game
         self.tk = tk
         self.root.title("Choose Your Difficulty")
-        self.photo = self.tk.PhotoImage(file="./assets/bgimage.png")
+        self.photo = self.tk.PhotoImage(file="./assets/bread.png")
         self.setup_ui()
 
     def setup_ui(self):
