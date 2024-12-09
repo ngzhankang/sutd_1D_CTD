@@ -296,7 +296,7 @@ class App(ttk.Frame):
         shop_window = tk.Toplevel(self.root)
         shop_window.title("Shop")
         shop_window.geometry("400x300")
-        shop_window.eval('tk::PlaceWindow . center')
+        # shop_window.eval('tk::PlaceWindow . center')
 
         # List of items in the shop
         items_for_sale = {
