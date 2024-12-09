@@ -1,11 +1,8 @@
 # im gonna mess around with this file so dont mind me(for real)
 # import library
 import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
-import json, copy
+from tkinter import ttk, messagebox
 from random import sample, randint
-from utils import load_config, render_deck
 from StartScreen import StartScreen
 from Enemy import Enemy
 from Card import Card
