@@ -347,7 +347,7 @@ class App(ttk.Frame):
             btn = tk.Button(
                 shop_window,
                 text=f"{item} - ({cost[1]}) - {cost[0]} gold",
-                command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, shop_window, items_for_sale), print(i, g, 'this nigga kkj'), self.deck.append(Card(i, g)), print(*self.deck)]
+                command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, shop_window, items_for_sale), self.deck.append(Card(i, g))]
             )
             btn.pack(pady=3)
 
