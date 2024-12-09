@@ -25,6 +25,7 @@ class App(ttk.Frame):
         self.selected = []
         self.confirm_button = None  # Track the confirmation button to avoid duplicates
         self.card_buttons = []  # List to keep track of card buttons
+        self.wallet = 0
 
         self.start_screen = StartScreen(root, self, tk)
 
