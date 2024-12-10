@@ -330,6 +330,11 @@ class App(ttk.Frame):
         shop_window = tk.Toplevel(self.root)
         shop_window.title("Shop")
         shop_window.geometry("400x500")
+
+        # self.photo = self.tk.PhotoImage(file="./assets/shopbg.png")
+        # pic_label = self.tk.Label(self.root, image=self.photo)
+        # pic_label.pack()
+
         x = (shop_window.winfo_screenwidth() - shop_window.winfo_reqwidth()) / 2 - 100
         y = (shop_window.winfo_screenheight() - shop_window.winfo_reqheight()) / 2 - 100
         shop_window.geometry("+%d+%d" % (x, y))
@@ -352,7 +357,7 @@ class App(ttk.Frame):
                 text=f"{item} - ({cost[1]}) - {cost[0]} gold",
                 command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, shop_window, items_for_sale), self.deck.append(Card(i, g))]
             )
-            btn.pack(pady=3)
+            btn.pack(pady=3, side='left')
 
         # Option to skip shopping
         skip_button = tk.Button(
