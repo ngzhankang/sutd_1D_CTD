@@ -164,12 +164,12 @@ class App(ttk.Frame):
             button = tk.Button(
                 self.cards_frame, 
                 text=f"{card.name}\n({card.grade})",
-                width=self.window_width//70, 
+                width=self.window_width//110, 
                 height=5,
                 command=lambda c=card: self.select_card(c, self.selected),
-                bg = '#CC0000',
+                bg = '#BF1010',
                 fg = '#F1C232',
-                font=("Old School Adventures", 7)
+                font=("Old School Adventures", 9)
             )
             self.card_buttons[card] = button  # Track card buttons
             button.pack(side="left", padx=5, pady=5)
@@ -181,17 +181,17 @@ class App(ttk.Frame):
             hand.append(str(card))
             self.selected_cards.remove(str(card))
             self.selected_classcards.remove(card)
-            self.card_buttons.get(card).config(bg = '#CC0000', fg = '#F1C232', font=("Old School Adventures", 7))
+            self.card_buttons.get(card).config(bg = '#BF1010', fg = '#F1C232', font=("Old School Adventures", 9))
         else: # Select the card
             if len(self.selected_cards) < 4:  # Limit to 4 cards
                 hand.remove(str(card))
                 self.selected_cards.append(str(card))
                 self.selected_classcards.append(card)
            
-                self.card_buttons.get(card).config(bg = '#C4BFFA', fg = 'black', font=("Old School Adventures", 7))
+                self.card_buttons.get(card).config(bg = '#C4BFFA', fg = 'black', font=("Old School Adventures", 9))
 
         # Update the selected cards label
-        self.selected_cards_label.config(text=f"Selected Cards: {', '.join(self.selected_cards)}")
+        self.selected_cards_label.config(text=f"Selected Cards: {', '.join(self.selected_cards)}", fg='#C4BFFA', font=("poppins",13))
 
         # Enable "Calculate Damage" buttons if cards are selected
         if len(self.selected_cards) == 4:
@@ -212,7 +212,9 @@ class App(ttk.Frame):
     def reselect_cards(self):
         """Reselect the player's cards by resetting the selected cards and allowing them to pick again."""
         for key in self.card_buttons.keys():
-            self.card_buttons.get(key).config(bg = 'white', fg = 'black')
+            self.card_buttons.get(key).config(bg = '#CC0000',
+                fg = '#F1C232',
+                font=("Old School Adventures", 9))
         self.selected_cards = []  # Clear the current card selection
         self.selected_classcards = []
         self.selected = [str(card) for card in self.hand]
