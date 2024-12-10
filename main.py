@@ -332,7 +332,7 @@ class App(ttk.Frame):
         shop_window = tk.Toplevel(self.root)
         shop_window.title("Shop")
         shop_window.geometry("400x500")
-        pic_label = self.tk.Label(self.root, image=self.photo)
+        pic_label = self.tk.Label(shop_window, image=self.photo)
         pic_label.pack()
 
         # self.photo = self.tk.PhotoImage(file="./assets/shopbg.png")
