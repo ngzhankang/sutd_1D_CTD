@@ -35,7 +35,7 @@ class App(ttk.Frame):
         self.root.update_idletasks()  # Update the window size
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
-        self.photo = self.tk.PhotoImage(file="./assets/bgshop.png")
+        self.photo = self.tk.PhotoImage(file="./assets/bgshop2.png")
         self.winphoto = self.tk.PhotoImage(file="./assets/winningbg2.png")
         self.root.title('Study Up Till Death')
    
@@ -420,7 +420,7 @@ class App(ttk.Frame):
         self.shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(self.shop_window))  # Disable the close button entirely
 
         # Display the items for sale
-        tk.Label(self.shop_title, text="Welcome to the shop!").pack(pady=10)
+        tk.Label(self.shop_title, text="Welcome to the shop!", font=("Old School Adventures", 20), bg='#1B1B1B', fg='#F1C232').pack(pady=10)
 
 
 
@@ -436,6 +436,9 @@ class App(ttk.Frame):
                 text=f"{item}\n({cost[1]}) - {cost[0]} gold",
                 width=15,
                 height=3,
+                bg = '#BF1010',
+                fg = '#F1C232',
+                font=("Old School Adventures", 10)
                 command=lambda i=item, c=cost[0], g=cost[1]: [
                     self.purchase_item(i, c, self.shop_window, items_for_sale),
                     self.deck.append(Card(i, g))
