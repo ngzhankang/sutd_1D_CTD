@@ -76,13 +76,13 @@ class App(ttk.Frame):
         self.message_label = tk.Label(self.actions_frame, text="Select 4 cards to deal damage!", font=("Poppins", 10), bg='#1B1B1B', fg='white')
         self.message_label.pack()
 
-        self.reselect_button = tk.Button(self.actions_frame, text="Reselect Cards", command=lambda:[self.update_count(), self.reselect_cards()], width=15, height=1, font=("Poppins", 10), bg='#1B1B1B', fg='white')
+        self.reselect_button = tk.Button(self.actions_frame, text="Reselect Cards", command=lambda:[self.update_count(), self.reselect_cards()], width=15, height=1, font=("Poppins", 10), bg='#F0F0F0', fg='#444444')
         self.reselect_button.pack(pady=3, padx=4, side ='left')
 
-        self.calculate_button = tk.Button(self.actions_frame, text="Calculate Damage", command=self.calculate_damage, width=15, height=1, font=("Poppins", 10), bg='#F35454', fg='white')
+        self.calculate_button = tk.Button(self.actions_frame, text="Calculate Damage", command=self.calculate_damage, width=15, height=1, font=("Poppins", 10), bg='#5F5F5F', fg='white')
         self.calculate_button.pack(pady=3, padx=4, side ='left')
 
-        self.confirm_attack_button = tk.Button(self.actions_frame, text="Confirm Attack", command=self.deal_damage, width=15, height=1, font=("Poppins", 10), bg='#C90000', fg='white')
+        self.confirm_attack_button = tk.Button(self.actions_frame, text="Confirm Attack", command=self.deal_damage, width=15, height=1, font=("Poppins", 10), bg='#444444', fg='white')
         self.confirm_attack_button.pack(pady=3, padx=4, side ='left')
 
     def set_difficulty(self, difficulty):
@@ -167,8 +167,9 @@ class App(ttk.Frame):
                 width=self.window_width//70, 
                 height=5,
                 command=lambda c=card: self.select_card(c, self.selected),
-                bg = 'white',
-                fg = 'black',
+                bg = '#CC0000',
+                fg = '#F1C232',
+                font=("Old School Adventures", 7)
             )
             self.card_buttons[card] = button  # Track card buttons
             button.pack(side="left", padx=5, pady=5)
@@ -180,13 +181,14 @@ class App(ttk.Frame):
             hand.append(str(card))
             self.selected_cards.remove(str(card))
             self.selected_classcards.remove(card)
-            self.card_buttons.get(card).config(bg = 'white', fg = 'black')
+            self.card_buttons.get(card).config(bg = '#CC0000', fg = '#F1C232', font=("Old School Adventures", 7))
         else: # Select the card
             if len(self.selected_cards) < 4:  # Limit to 4 cards
                 hand.remove(str(card))
                 self.selected_cards.append(str(card))
                 self.selected_classcards.append(card)
-                self.card_buttons.get(card).config(bg = 'black', fg = 'white')
+           
+                self.card_buttons.get(card).config(bg = '#C4BFFA', fg = 'black', font=("Old School Adventures", 7))
 
         # Update the selected cards label
         self.selected_cards_label.config(text=f"Selected Cards: {', '.join(self.selected_cards)}")
