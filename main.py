@@ -37,6 +37,7 @@ class App(ttk.Frame):
         self.window_height = self.root.winfo_height()  # Get window height
         self.photo = self.tk.PhotoImage(file="./assets/bgshop.png")
         self.winphoto = self.tk.PhotoImage(file="./assets/winningbg2.png")
+        self.photoDeck = self.tk.PhotoImage(file="./assets/bgimage.png")
         self.root.title('Study Up Till Death')
    
 
@@ -354,30 +355,34 @@ class App(ttk.Frame):
 
     def show_deck(self):
         """Display deck window."""
+
         # create a new window for the deck
         deck_window = tk.Toplevel(self.root)
         deck_window.title("Deck")
 
-        # maximise window
+        # make window zoomed
         deck_window.state('zoomed')
         deck_window.update_idletasks()
 
         # when window close, close window
         deck_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(deck_window))
 
+        # create background image label
+        tk.Label(deck_window, image=self.photoDeck).pack()
+
         # create frame to center cards
-        cards_frame = tk.Frame(deck_window)
+        cards_frame = tk.Frame(deck_window, bg="#1b1b1b")
         cards_frame.pack(expand=True)
         cards_frame.place(relx=0.5, rely=0.5, anchor="center")
 
         # loop through each card in deck
-        columns = 4
+        columns = 5
         for index, card in enumerate(self.deck):
 
             # create button for card
-            button = tk.Button(
+            label = tk.Label(
                 cards_frame,
-                text=f"{card.name} ({card.grade})",
+                text=f"{card.name}\n({card.grade})",
                 width=self.window_width//110, 
                 height=5,
                 bg = '#BF1010',
@@ -390,7 +395,7 @@ class App(ttk.Frame):
             column = index % columns
 
             # create button into grid
-            button.grid(row=row, column=column, padx=10, pady=10)
+            label.grid(row=row, column=column, padx=10, pady=10)
 
 
     def show_shop(self):
