@@ -438,7 +438,7 @@ class App(ttk.Frame):
                 height=3,
                 bg = '#BF1010',
                 fg = '#F1C232',
-                font=("Old School Adventures", 10)
+                font=("Old School Adventures", 10),
                 command=lambda i=item, c=cost[0], g=cost[1]: [
                     self.purchase_item(i, c, self.shop_window, items_for_sale),
                     self.deck.append(Card(i, g))
