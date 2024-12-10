@@ -11,23 +11,26 @@ class StartScreen:
         # Layout for difficulty selection
         pic_label = self.tk.Label(self.root, image=self.photo)
         pic_label.pack()
-
+      
+        self.start_label = self.tk.Label(self.root, text="Welcome to", font=("Poppins", 18) , bg='#1B1B1B', fg='white')
+        self.start_label.place(relx=0.5, rely=0.26, anchor="center")  # Center the title label
+    
         self.welcome_label = self.tk.Label(self.root, text="'Study Up Till Death'", font=("Old School Adventures", 33) , bg='#1B1B1B', fg='#F1C130')
-        self.welcome_label.place(relx=0.5, rely=0.23, anchor="center")  # Center the title label
+        self.welcome_label.place(relx=0.5, rely=0.33, anchor="center")  # Center the title label
 
 
-        self.title_label = self.tk.Label(self.root, text="Select Difficulty", font=("Old School Adventures", 20),bg='#1B1B1B', fg='white')
-        self.title_label.place(relx=0.5, rely=0.37, anchor="center")  # Center the title label
+        self.title_label = self.tk.Label(self.root, text="Select Difficulty ...", font=("Old School Adventures", 20),bg='#1B1B1B', fg='white')
+        self.title_label.place(relx=0.5, rely=0.45, anchor="center")  # Center the title label
 
         # Buttons for difficulty
         self.term1_button = self.tk.Button(self.root, text="Term 1 (Easy)", font=("Old School Adventures", 8), width=20, height=2, bg='#59BB7B', fg='black', command=lambda: self.start_game("Term 1"))
-        self.term1_button.place(relx=0.3, rely=0.5, anchor="center")  # Center the term 1 button
+        self.term1_button.place(relx=0.3, rely=0.6, anchor="center")  # Center the term 1 button
 
-        self.term2_button = self.tk.Button(self.root, text="Term 2 (Medium)", font=("Old School Adventures", 8), width=20, height=2, bg='#F8333C', fg='white', command=lambda: self.start_game("Term 2"))
-        self.term2_button.place(relx=0.5, rely=0.5, anchor="center")  # Center the term 2 button
+        self.term2_button = self.tk.Button(self.root, text="Term 2 (Medium)", font=("Old School Adventures", 8), width=20, height=2, bg='#FCAB10', fg='black', command=lambda: self.start_game("Term 2"))
+        self.term2_button.place(relx=0.5, rely=0.6, anchor="center")  # Center the term 2 button
 
-        self.term3_button = self.tk.Button(self.root, text="Term 3 (Hard)", font=("Old School Adventures", 8), width=20, height=2, bg='#FCAB10', fg='black', command=lambda: self.start_game("Term 3"))
-        self.term3_button.place(relx=0.7, rely=0.5, anchor="center")  # Center the term 3 button
+        self.term3_button = self.tk.Button(self.root, text="Term 3 (Hard)", font=("Old School Adventures", 8), width=20, height=2, bg='#F8333C', fg='white', command=lambda: self.start_game("Term 3"))
+        self.term3_button.place(relx=0.7, rely=0.6, anchor="center")  # Center the term 3 button
 
     def start_game(self, difficulty):
         self.game.set_difficulty(difficulty)
