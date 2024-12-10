@@ -37,7 +37,8 @@ class App(ttk.Frame):
         self.root.update_idletasks()  # Update the window size
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
-
+        self.photo = self.tk.PhotoImage(file="./assets/shopbg.png")
+       
    
 
     def setup_ui(self):
@@ -330,6 +331,8 @@ class App(ttk.Frame):
         shop_window = tk.Toplevel(self.root)
         shop_window.title("Shop")
         shop_window.geometry("400x500")
+        pic_label = self.tk.Label(self.root, image=self.photo)
+        pic_label.pack()
 
         # self.photo = self.tk.PhotoImage(file="./assets/shopbg.png")
         # pic_label = self.tk.Label(self.root, image=self.photo)
