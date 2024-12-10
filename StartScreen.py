@@ -4,7 +4,7 @@ class StartScreen:
         self.game = game
         self.tk = tk
         self.root.title("Choose Your Difficulty")
-        self.photo = self.tk.PhotoImage(file="./assets/bgimage2.png")
+        self.photo = self.tk.PhotoImage(file="./assets/whitebg.png")
         self.setup_ui()
 
     def setup_ui(self):
@@ -12,14 +12,14 @@ class StartScreen:
         pic_label = self.tk.Label(self.root, image=self.photo)
         pic_label.pack()
       
-        self.start_label = self.tk.Label(self.root, text="Welcome to", font=("Poppins", 18) , bg='#1B1B1B', fg='white')
+        self.start_label = self.tk.Label(self.root, text="Welcome to", font=("Poppins Bold", 18) , fg='black')
         self.start_label.place(relx=0.5, rely=0.26, anchor="center")  # Center the title label
     
-        self.welcome_label = self.tk.Label(self.root, text="'Study Up Till Death'", font=("Old School Adventures", 33) , bg='#1B1B1B', fg='#F1C130')
+        self.welcome_label = self.tk.Label(self.root, text="'Study Up Till Death'", font=("Old School Adventures", 33), fg='#E6A900')
         self.welcome_label.place(relx=0.5, rely=0.33, anchor="center")  # Center the title label
 
 
-        self.title_label = self.tk.Label(self.root, text="Select Difficulty ...", font=("Old School Adventures", 20),bg='#1B1B1B', fg='white')
+        self.title_label = self.tk.Label(self.root, text="Select Difficulty ...", font=("Old School Adventures", 20), fg='black')
         self.title_label.place(relx=0.5, rely=0.45, anchor="center")  # Center the title label
 
         # Buttons for difficulty
