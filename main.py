@@ -436,9 +436,9 @@ class App(ttk.Frame):
                 text=f"{item}\n({cost[1]}) - {cost[0]} gold",
                 width=15,
                 height=3,
-                bg = '#BF1010',
-                fg = '#F1C232',
-                font=("Old School Adventures", 10),
+                bg = '#F1C232',
+                fg = 'white',
+                font=("Old School Adventures", 9),
                 command=lambda i=item, c=cost[0], g=cost[1]: [
                     self.purchase_item(i, c, self.shop_window, items_for_sale),
                     self.deck.append(Card(i, g))
@@ -458,7 +458,10 @@ class App(ttk.Frame):
         skip_button = tk.Button(
             self.shop_exit,
             text="Skip and collect bonus gold",
-            command=lambda: self.skip_shop(self.shop_window)
+            command=lambda: self.skip_shop(self.shop_window), 
+            bg = '#1C000E',
+            fg = 'white',
+            font=("Poppins", 9),
         )
         skip_button.pack(pady=10)
 
