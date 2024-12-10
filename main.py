@@ -32,11 +32,12 @@ class App(ttk.Frame):
         self.start_screen = StartScreen(root, self, tk)
 
         # Maximise the window and center everything
-        self.root.geometry(f"{self.root.winfo_screenwidth()}x{self.root.winfo_screenheight()}+0+0")  # Maximise window size
+        self.root.state('zoomed')
         self.root.update_idletasks()  # Update the window size
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
         self.photo = self.tk.PhotoImage(file="./assets/bgshop.png")
+        self.winphoto = self.tk.PhotoImage(file="./assets/winningbg2.png")
         self.root.title('Study Up Till Death')
    
 
@@ -68,7 +69,6 @@ class App(ttk.Frame):
         self.enemy_health_label = tk.Label(self.stats_frame, text="❤️‍🩹Enemy Health: N/A", font=("Old School Adventures", 13), bg='#1B1B1B', fg='#FF4F4F')  # Display for enemy health
         self.enemy_health_label.grid(row=4, column=0)
 
-
         self.selected_cards_label = tk.Label(self.actionsinfo_frame, text="Selected Cards: None", font=("Poppins", 13), bg='#1B1B1B', fg='white')
         self.selected_cards_label.pack()
 
@@ -88,7 +88,10 @@ class App(ttk.Frame):
         self.confirm_attack_button.grid(pady=3, padx=4, row=0, column=3)
 
         self.win_button = tk.Button(self.actions_frame, text="win", command=lambda: self.game_over('You win!'), width=15, height=1, font=("Poppins", 10), bg='#444444', fg='white')
-        self.win_button.grid(pady=3, padx=4, row=1, column=2)
+        self.win_button.grid(pady=3, padx=4, row=1, column=3)
+
+        self.show_deck_button = tk.Button(self.actions_frame, text="Show Deck", command=self.show_deck, width=15, height=1, font=("Poppins", 10), bg='#444444', fg='white')
+        self.show_deck_button.grid(pady=3, padx=4, row=1, column=1)
 
     def set_difficulty(self, difficulty):
         self.difficulty = difficulty
@@ -297,7 +300,6 @@ class App(ttk.Frame):
 
     def close_window(self, window):
         window.destroy()  # Close the shop window
-        self.next_encounter()  # Proceed to the next encounter
 
     def show_event_window(self):
         """Open event window"""
@@ -318,22 +320,23 @@ class App(ttk.Frame):
 
         self.deck.append(Card("F*CKED UP", "F"))
 
-        btn = tk.Button(event_window, text='RIP :(', command=lambda: self.close_window(event_window))
+        btn = tk.Button(event_window, text='RIP :(', command=lambda: [self.close_window(event_window), self.next_encounter()])
         btn.place(relx=0.5, rely=0.6, anchor='center')
 
-        event_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event_window))
+        event_window.protocol("WM_DELETE_WINDOW", lambda: [self.close_window(event_window), self.next_encounter()])
 
 
     def show_deck(self):
         """Display deck window."""
-
         # create a new window for the deck
         deck_window = tk.Toplevel(self.root)
         deck_window.title("Deck")
 
         # maximise window
-        self.root.geometry(f"{self.root.winfo_screenwidth()}x{self.root.winfo_screenheight()}+0+0")
-        self.root.update_idletasks()
+        deck_window.state('zoomed')
+        deck_window.update_idletasks()
+
+        deck_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(deck_window))
 
 
     def show_shop(self):
@@ -448,17 +451,19 @@ class App(ttk.Frame):
 
     def game_over_screen(self, message):
         """Display a Game Over screen."""
-        
+        pic_label = self.tk.Label(self.root, image=self.winphoto)
+        pic_label.place(x=0, y=0)
+
         # Game Over message
-        game_over_label = tk.Label(self.root, text=message)
-        game_over_label.place(relx=0.5, rely=0.3, anchor="center")
-
+        game_over_label = tk.Label(self.root, text=message, font=("Old School Adventures", 25), bg='#1B1B1B', fg='#F1C232')
+        game_over_label.place(relx=0.5, rely=0.2, anchor="center")
+        
         # Buttons for Quit and Restart
-        quit_button = tk.Button(self.root, text="Quit", command=self.quit_game, width=20, height=2)
-        quit_button.place(relx=0.5, rely=0.5, anchor="center")
+        quit_button = tk.Button(self.root, text="Quit", command=self.quit_game, width=20, height=2, font=("Old School Adventures", 9), bg='white', fg='#05349B')
+        quit_button.place(relx=0.3, rely=0.7, anchor="center")
 
-        restart_button = tk.Button(self.root, text="Restart", command=self.restart_game, width=20, height=2)
-        restart_button.place(relx=0.5, rely=0.7, anchor="center")
+        restart_button = tk.Button(self.root, text="Restart", command=self.restart_game, width=20, height=2, font=("Old School Adventures", 9), bg='white', fg='#05349B')
+        restart_button.place(relx=0.7, rely=0.7, anchor="center")
 
     def quit_game(self):
         """Quit the game."""
