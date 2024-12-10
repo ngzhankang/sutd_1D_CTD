@@ -55,14 +55,14 @@ class App(ttk.Frame):
         self.actions_frame.place(relx=0.5, rely=0.8, anchor="center")  # Position actions frame
 
         # Stats Display
-        self.enemy_label = tk.Label(self.stats_frame, text="Enemy: None")
+        self.enemy_label = tk.Label(self.stats_frame, text="Enemy: None", font=("Old School Adventures", 19), bg='#1B1B1B', fg='#F1C130')
         self.enemy_label.grid(row=0, column=0)
 
-        self.enemy_health_label = tk.Label(self.stats_frame, text="Enemy Health: N/A")  # Display for enemy health
-        self.enemy_health_label.grid(row=0, column=1)
+        self.enemy_health_label = tk.Label(self.stats_frame, text="Enemy Health: N/A", font=("Old School Adventures", 19), bg='#1B1B1B', fg='#F1C130')  # Display for enemy health
+        self.enemy_health_label.grid(row=1, column=0)
 
-        self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4")
-        self.turn_label.grid(row=0, column=3)
+        self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4",font=("Old School Adventures", 14), bg='#1B1B1B', fg='white')
+        self.turn_label.grid(row=2, column=0)
 
         self.wallet_label = tk.Label(self.actions_frame, text=f"Gold: {self.wallet}")
         self.wallet_label.pack()
