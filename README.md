@@ -37,7 +37,7 @@ This repository is to host the notebook that my besties and I created for the 1D
 # Contributors
 - Ng Zhan Kang (1009291)
 - Tan Yok Kee (1009270)
-- Edward Chan Jun Da
+- Edward Chan Jun Da (1008744)
 - Teh Wu Rui (1008761)
-- Clarice Tan Yi Shan
-- Yan Yung Hong
+- Clarice Tan Yi Shan (1009366)
+- Yan Yung Hong (1008904)
