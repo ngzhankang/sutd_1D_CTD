@@ -423,8 +423,6 @@ class App(ttk.Frame):
         # Display the items for sale
         tk.Label(self.shop_title, text="Welcome to the shop!", font=("Old School Adventures", 20), bg='#1B1B1B', fg='#F1C232').pack(pady=10)
 
-
-
         # Display items in a 4x4 grid
         max_columns = 3  # Maximum columns per row
         row_index = 0
@@ -459,7 +457,10 @@ class App(ttk.Frame):
         skip_button = tk.Button(
             self.shop_exit,
             text="Skip and collect bonus gold",
-            command=lambda: self.skip_shop(self.shop_window)
+            command=lambda: self.skip_shop(self.shop_window),
+            font=("Old School Adventures", 20),
+            bg='#1B1B1B',
+            fg='#F1C232'
         )
         skip_button.pack(pady=10)
 
