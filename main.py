@@ -326,6 +326,19 @@ class App(ttk.Frame):
 
         event_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event_window))
 
+
+    def show_deck(self):
+        """Display deck window."""
+
+        # create a new window for the deck
+        deck_window = tk.Toplevel(self.root)
+        deck_window.title("Deck")
+
+        # maximise window
+        self.root.geometry(f"{self.root.winfo_screenwidth()}x{self.root.winfo_screenheight()}+0+0")
+        self.root.update_idletasks()
+
+
     def show_shop(self):
         """Display a shop after defeating the boss."""
         # Create a popup window for the shop
