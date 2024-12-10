@@ -13,7 +13,7 @@ import tkinter.font as tkFont
 class App(ttk.Frame):
     def __init__(self, root):
         self.root = root
-        self.turn_limit = 4  # Start with 4 turns for the first encounter
+        self.turn_limit = 0
         self.current_turn = 1
         self.deck = start_deck()
         self.hand = []
@@ -22,7 +22,6 @@ class App(ttk.Frame):
         self.difficulty = None
         self.selected_cards = []
         self.selected_classcards = []
-        self.selected = []
         self.confirm_button = None  # Track the confirmation button to avoid duplicates
         self.card_buttons = {}  # List to keep track of card buttons
         self.wallet = 20
@@ -33,13 +32,12 @@ class App(ttk.Frame):
         self.start_screen = StartScreen(root, self, tk)
 
         # Maximise the window and center everything
-        self.root.state('normal')  # Ensure the window is not in fullscreen state
         self.root.geometry(f"{self.root.winfo_screenwidth()}x{self.root.winfo_screenheight()}+0+0")  # Maximise window size
         self.root.update_idletasks()  # Update the window size
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
-        self.photo = self.tk.PhotoImage(file="./assets/shopbg.png")
-       
+        self.photo = self.tk.PhotoImage(file="./assets/bgshop.png")
+        self.root.title('Study Up Till Death')
    
 
     def setup_ui(self):
@@ -70,25 +68,27 @@ class App(ttk.Frame):
         self.enemy_health_label = tk.Label(self.stats_frame, text="❤️‍🩹Enemy Health: N/A", font=("Old School Adventures", 13), bg='#1B1B1B', fg='#FF4F4F')  # Display for enemy health
         self.enemy_health_label.grid(row=4, column=0)
 
-   
-
-        self.wallet_label = tk.Label(self.actionsinfo_frame, text=f"🪙Gold: {self.wallet}", font=("Poppins", 13), bg='#1B1B1B', fg='#F1C130')
-        self.wallet_label.pack(side ='left')
 
         self.selected_cards_label = tk.Label(self.actionsinfo_frame, text="Selected Cards: None", font=("Poppins", 13), bg='#1B1B1B', fg='white')
-        self.selected_cards_label.pack(side ='right')
+        self.selected_cards_label.pack()
 
-        self.message_label = tk.Label(self.actions_frame, text="🃏Select 4 cards to deal damage!", font=("Poppins", 10), bg='#1B1B1B', fg='white')
+        self.wallet_label = tk.Label(self.actionsinfo_frame, text=f"🪙Gold: {self.wallet}", font=("Poppins", 13), bg='#1B1B1B', fg='#F1C130')
+        self.wallet_label.pack()
+
+        self.message_label = tk.Label(self.actionsinfo_frame, text="🃏Select 4 cards to deal damage!", font=("Poppins", 16), bg='#1B1B1B', fg='white')
         self.message_label.pack()
 
         self.reselect_button = tk.Button(self.actions_frame, text="Reselect Cards", command=lambda:[self.update_count(), self.reselect_cards()], width=15, height=1, font=("Poppins", 10), bg='#F0F0F0', fg='#444444')
-        self.reselect_button.pack(pady=3, padx=4, side ='left')
+        self.reselect_button.grid(pady=3, padx=4, row=0, column=1)
 
         self.calculate_button = tk.Button(self.actions_frame, text="Calculate Damage", command=self.calculate_damage, width=15, height=1, font=("Poppins", 10), bg='#5F5F5F', fg='white')
-        self.calculate_button.pack(pady=3, padx=4, side ='left')
+        self.calculate_button.grid(pady=3, padx=4, row=0, column=2)
 
         self.confirm_attack_button = tk.Button(self.actions_frame, text="Confirm Attack", command=self.deal_damage, width=15, height=1, font=("Poppins", 10), bg='#444444', fg='white')
-        self.confirm_attack_button.pack(pady=3, padx=4, side ='left')
+        self.confirm_attack_button.grid(pady=3, padx=4, row=0, column=3)
+
+        self.win_button = tk.Button(self.actions_frame, text="win", command=lambda: self.game_over('You win!'), width=15, height=1, font=("Poppins", 10), bg='#444444', fg='white')
+        self.win_button.grid(pady=3, padx=4, row=1, column=2)
 
     def set_difficulty(self, difficulty):
         self.difficulty = difficulty
@@ -114,8 +114,9 @@ class App(ttk.Frame):
 
         # GPA scaling logic based on difficulty
         if difficulty == "Term 1":
-            # Term 1: Enemies scale from 1.0 to 5.3 (6 enemies total)
-            gpa_scaling = [1.0, 1.8, 2.5, 3.1, 4.0, 5.3]
+            # Term 1: Enemies scale from 1.0 to 5.3 (9 enemies total)
+            self.turn_limit = 21
+            gpa_scaling = [1.0, 1.6, 2.2, 2.8, 3.4, 4.0, 4.5, 5.1, 5.3]
             for i in range(len(gpa_scaling)):
                 random = randint(0, len(base_enemies)-1)
                 if i == len(gpa_scaling)-1:
@@ -126,8 +127,9 @@ class App(ttk.Frame):
                     encounters.append(Enemy(base_enemies[random], gpa_scaling[i]))   
 
         elif difficulty == "Term 2":
-            # Term 2: Enemies scale from 1.0 to 5.3 (5 enemies total)
-            gpa_scaling = [1.0, 2.0, 2.8, 3.5, 5.3]
+            # Term 2: Enemies scale from 1.0 to 5.3 (7 enemies total)
+            self.turn_limit = 14
+            gpa_scaling = [1.0, 1.7, 2.4, 3.2, 3.9, 4.6, 5.3]
             for i in range(len(gpa_scaling)):
                 random = randint(0, len(base_enemies)-1)
                 if i == len(gpa_scaling)-1:
@@ -138,8 +140,9 @@ class App(ttk.Frame):
                     encounters.append(Enemy(base_enemies[random], gpa_scaling[i]))
 
         elif difficulty == "Term 3":
-            # Term 3: Enemies scale from 1.0 to 5.3 (4 enemies total)
-            gpa_scaling = [1.0, 2.5, 4.0, 5.3]
+            # Term 3: Enemies scale from 1.0 to 5.3 (5 enemies total)
+            self.turn_limit = 7
+            gpa_scaling = [1.0, 2.0, 2.8, 3.5, 5.3]
             for i in range(len(gpa_scaling)):
                 random = randint(0, len(base_enemies)-1)
                 if i == len(gpa_scaling)-1:
@@ -163,7 +166,6 @@ class App(ttk.Frame):
 
         # Draw 7 cards from the deck
         self.hand = [card for card in sample(self.deck, 7)]
-        self.selected = [str(card) for card in self.hand]
         self.card_buttons = {}
         for card in self.hand:
             button = tk.Button(
@@ -171,7 +173,7 @@ class App(ttk.Frame):
                 text=f"{card.name}\n({card.grade})",
                 width=self.window_width//110, 
                 height=5,
-                command=lambda c=card: self.select_card(c, self.selected),
+                command=lambda c=card: self.select_card(c),
                 bg = '#BF1010',
                 fg = '#F1C232',
                 font=("Old School Adventures", 10)
@@ -179,20 +181,17 @@ class App(ttk.Frame):
             self.card_buttons[card] = button  # Track card buttons
             button.pack(side="left", padx=5, pady=5)
 
-    def select_card(self, card, hand):
+    def select_card(self, card):
         self.message_label.config(text="Select 4 cards to deal damage!")
         """Select or deselect a card for the player."""
-        if str(card) in self.selected_cards and str(card) not in hand: # Deselect the card
-            hand.append(str(card))
+        if str(card) in self.selected_cards: # Deselect the card
             self.selected_cards.remove(str(card))
             self.selected_classcards.remove(card)
             self.card_buttons.get(card).config(bg = '#BF1010', fg = '#F1C232', font=("Old School Adventures", 10))
         else: # Select the card
             if len(self.selected_cards) < 4:  # Limit to 4 cards
-                hand.remove(str(card))
                 self.selected_cards.append(str(card))
                 self.selected_classcards.append(card)
-           
                 self.card_buttons.get(card).config(bg = '#C4BFFA', fg = '#05349B', font=("Old School Adventures", 10))
 
         # Update the selected cards label
@@ -221,8 +220,6 @@ class App(ttk.Frame):
                 fg = '#F1C232',
                 font=("Old School Adventures", 10))
         self.selected_cards = []  # Clear the current card selection
-        self.selected_classcards = []
-        self.selected = [str(card) for card in self.hand]
         self.message_label.config(text="Select 4 cards to deal damage!")
         self.selected_cards_label.config(text="Selected Cards: None")  # Reset the label
 
@@ -254,6 +251,7 @@ class App(ttk.Frame):
 
         # Check if the enemy is defeated
         if self.current_enemy.gpa <= 0:
+            self.current_turn += 1
             self.message_label.config(text=f"{self.current_enemy.name} defeated!")
             random = randint(1, 700)
             if random == 365:
@@ -271,8 +269,7 @@ class App(ttk.Frame):
         if not self.encounters:
             self.game_over("You won!")
             return
-
-        self.current_turn = 1
+        
         self.current_enemy = self.encounters.pop(0)
         self.turn_label.config(text=f"Turn: {self.current_turn} / {self.turn_limit}")
         self.selected_cards_label.config(text="Selected Cards: None")
@@ -305,7 +302,7 @@ class App(ttk.Frame):
     def show_event_window(self):
         """Open event window"""
         event_window = tk.Toplevel(self.root)  # Create a new popup window
-        event_window.title("Special Event")
+        event_window.title("Clown Encounter")
         event_window.geometry("400x300")
         # moves window to center
         x = (event_window.winfo_screenwidth() - event_window.winfo_reqwidth()) / 2 - 100
@@ -342,17 +339,19 @@ class App(ttk.Frame):
     def show_shop(self):
         """Display a shop after defeating the boss."""
         # Create a popup window for the shop
-        shop_window = tk.Toplevel(self.root)
-        shop_window.title("Shop")
-        shop_window.geometry("400x500")
-        pic_label = self.tk.Label(shop_window, image=self.photo)
+        self.shop_window = tk.Toplevel(self.root)
+        self.shop_window.title("Shop")
+        self.shop_window.geometry("400x500")
+        pic_label = self.tk.Label(self.shop_window, image=self.photo)
         pic_label.place(x=0, y=0)
 
-
-        x = (shop_window.winfo_screenwidth() - shop_window.winfo_reqwidth()) / 2 - 100
-        y = (shop_window.winfo_screenheight() - shop_window.winfo_reqheight()) / 2 - 100
-        shop_window.geometry("+%d+%d" % (x, y))
-        shop_window.deiconify()
+        self.row=tk.Frame(self.shop_window, bg='#1B1B1B')
+        self.row.place(relx=0.5, rely=0.2, anchor="center")  # Position top frame in the center
+        
+        x = (self.shop_window.winfo_screenwidth() - self.shop_window.winfo_reqwidth()) / 2 - 100
+        y = (self.shop_window.winfo_screenheight() - self.shop_window.winfo_reqheight()) / 2 - 100
+        self.shop_window.geometry("+%d+%d" % (x, y))
+        self.shop_window.deiconify()
 
         # List of items in the shop
         coursework = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
@@ -360,26 +359,41 @@ class App(ttk.Frame):
         items_for_sale = RandomnizeShopCards.shop(root, coursework, ownGrade)
 
         # Prevent user from closing the window with the X button
-        shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(shop_window))  # Disable the close button entirely
+        self.shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(self.shop_window))  # Disable the close button entirely
 
         # Display the items for sale
-        tk.Label(shop_window, text="Welcome to the shop!").pack(pady=10)
+        tk.Label(self.shop_window, text="Welcome to the shop!").pack(pady=10)
         
+        shop_list=[]
         for item, cost in items_for_sale.items():
             btn = tk.Button(
-                shop_window,
+                self.row,
                 text=f"{item} - ({cost[1]}) - {cost[0]} gold",
-                command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, shop_window, items_for_sale), self.deck.append(Card(i, g))]
+                command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, self.shop_window, items_for_sale), self.deck.append(Card(i, g))]
             )
-            btn.pack(side='left')
+            shop_list.append(btn)
+        shop_row1=shop_list[0:4]
+        shop_row2=shop_list[4:9]
+        shop_row3=shop_list[9:13]
+
+        for i in range (2,9,3):
+            for btn in shop_row1: btn.grid(row=2, column=i, padx=(1, 1))
+            for btn in shop_row2: btn.grid(row=5, column=i)
+            for btn in shop_row3: btn.grid(row=7, column=i)
+  
 
         # Option to skip shopping
         skip_button = tk.Button(
-            shop_window,
+            self.shop_window,
             text="Skip and collect bonus gold",
-            command=lambda: self.skip_shop(shop_window)
+            command=lambda: self.skip_shop(self.shop_window)
         )
         skip_button.pack(pady=10)
+
+    def bring_main_to_front(self):
+        self.shop_window.lift()  # Raise the main window
+        self.shop_window.attributes('-topmost', True)  # Keep it on top
+        self.shop_window.attributes('-topmost', False)  # Allow normal behaviour afterward
 
     def purchase_item(self, item, cost, window, buttons):
         """Handle item purchase logic."""
@@ -391,6 +405,8 @@ class App(ttk.Frame):
             # self.check_victory_condition()
         else:
             messagebox.showerror("Not enough gold", "You don't have enough gold for that item!")
+
+            self.bring_main_to_front()
 
             # Disable all buttons to prevent retry spamming
             for btn in buttons:
@@ -424,6 +440,7 @@ class App(ttk.Frame):
 
     def game_over_screen(self, message):
         """Display a Game Over screen."""
+        
         # Game Over message
         game_over_label = tk.Label(self.root, text=message)
         game_over_label.place(relx=0.5, rely=0.3, anchor="center")
