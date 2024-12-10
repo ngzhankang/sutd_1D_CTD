@@ -334,7 +334,9 @@ class App(ttk.Frame):
         pic_label = self.tk.Label(shop_window, image=self.photo)
         pic_label.place(x=0, y=0)
 
-
+        self.row=tk.Frame(shop_window, bg='#1B1B1B')
+        self.row.place(relx=0.5, rely=0.2, anchor="center")  # Position top frame in the center
+        
         x = (shop_window.winfo_screenwidth() - shop_window.winfo_reqwidth()) / 2 - 100
         y = (shop_window.winfo_screenheight() - shop_window.winfo_reqheight()) / 2 - 100
         shop_window.geometry("+%d+%d" % (x, y))
@@ -351,13 +353,23 @@ class App(ttk.Frame):
         # Display the items for sale
         tk.Label(shop_window, text="Welcome to the shop!").pack(pady=10)
         
+        shop_list=[]
         for item, cost in items_for_sale.items():
             btn = tk.Button(
-                shop_window,
+                self.row,
                 text=f"{item} - ({cost[1]}) - {cost[0]} gold",
                 command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, shop_window, items_for_sale), self.deck.append(Card(i, g))]
             )
-            btn.pack(side='left')
+            shop_list.append(btn)
+        shop_row1=shop_list[0:4]
+        shop_row2=shop_list[4:9]
+        shop_row3=shop_list[9:13]
+
+        for i in range (2,9,3):
+            for btn in shop_row1: btn.grid(row=2, column=i, padx=(1, 1))
+            for btn in shop_row2: btn.grid(row=5, column=i)
+            for btn in shop_row3: btn.grid(row=7, column=i)
+  
 
         # Option to skip shopping
         skip_button = tk.Button(
