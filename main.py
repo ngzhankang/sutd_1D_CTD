@@ -89,6 +89,9 @@ class App(ttk.Frame):
         self.confirm_attack_button = tk.Button(self.actions_frame, text="Confirm Attack", command=self.deal_damage, width=15, height=1, font=("Poppins", 10), bg='#444444', fg='white')
         self.confirm_attack_button.grid(pady=3, padx=4, row=0, column=3)
 
+        self.win_button = tk.Button(self.actions_frame, text="win", command=lambda: self.game_over('You win!'), width=15, height=1, font=("Poppins", 10), bg='#444444', fg='white')
+        self.win_button.grid(pady=3, padx=4, row=1, column=2)
+
     def set_difficulty(self, difficulty):
         self.difficulty = difficulty
         # Based on difficulty, create different encounters
