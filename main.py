@@ -1,9 +1,7 @@
 # im gonna mess around with this file so dont mind me(for real)
 # import library
 import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
-import json, copy
+from tkinter import messagebox, ttk
 from random import sample, randint, shuffle
 from utils import *
 from StartScreen import StartScreen
@@ -65,6 +63,9 @@ class App(ttk.Frame):
 
         self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4")
         self.turn_label.grid(row=0, column=3)
+
+        self.wallet_label = tk.Label(self.actions_frame, text=f"Gold: {self.wallet}")
+        self.wallet_label.pack()
 
         self.selected_cards_label = tk.Label(self.actions_frame, text="Selected Cards: None")
         self.selected_cards_label.pack()
@@ -185,8 +186,7 @@ class App(ttk.Frame):
                 self.card_buttons.get(card).config(bg = 'black', fg = 'white')
 
         # Update the selected cards label
-        selected_card_names = [card for card in self.selected_cards]
-        self.selected_cards_label.config(text=f"Selected Cards: {', '.join(selected_card_names)}")
+        self.selected_cards_label.config(text=f"Selected Cards: {', '.join(self.selected_cards)}")
 
         # Enable "Calculate Damage" buttons if cards are selected
         if len(self.selected_cards) == 4:
@@ -226,7 +226,6 @@ class App(ttk.Frame):
 
     def deal_damage(self):
         self.buttonclicks = 0
-        self.calculate_button.config(state=tk.DISABLED)
         self.confirm_attack_button.config(state=tk.DISABLED)
         self.calculate_button.config(state=tk.DISABLED)
         """Deal damage to the enemy and move to the next turn."""
@@ -296,6 +295,7 @@ class App(ttk.Frame):
         event_window = tk.Toplevel(self.root)  # Create a new popup window
         event_window.title("Special Event")
         event_window.geometry("400x300")
+        # moves window to center
         x = (event_window.winfo_screenwidth() - event_window.winfo_reqwidth()) / 2 - 100
         y = (event_window.winfo_screenheight() - event_window.winfo_reqheight()) / 2 - 100
         event_window.geometry("+%d+%d" % (x, y))
@@ -312,34 +312,35 @@ class App(ttk.Frame):
         btn = tk.Button(event_window, text='RIP :(', command=lambda: self.close_window(event_window))
         btn.place(relx=0.5, rely=0.6, anchor='center')
 
-        # Prevent user from closing the window with the X button
-        event_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event_window))  # Disable the close button entirely
+        event_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event_window))
 
     def show_shop(self):
         """Display a shop after defeating the boss."""
         # Create a popup window for the shop
         shop_window = tk.Toplevel(self.root)
         shop_window.title("Shop")
-        shop_window.geometry("400x300")
+        shop_window.geometry("400x500")
         x = (shop_window.winfo_screenwidth() - shop_window.winfo_reqwidth()) / 2 - 100
         y = (shop_window.winfo_screenheight() - shop_window.winfo_reqheight()) / 2 - 100
         shop_window.geometry("+%d+%d" % (x, y))
         shop_window.deiconify()
 
         # List of items in the shop
-        items_for_sale = RandomnizeShopCards()
+        coursework = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
+        ownGrade = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+        items_for_sale = RandomnizeShopCards.shop(root, coursework, ownGrade)
 
         # Prevent user from closing the window with the X button
         shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(shop_window))  # Disable the close button entirely
 
         # Display the items for sale
         tk.Label(shop_window, text="Welcome to the shop!").pack(pady=10)
-
+        
         for item, cost in items_for_sale.items():
             btn = tk.Button(
                 shop_window,
-                text=f"{item} - {cost} gold",
-                command=lambda i=item, c=cost: self.purchase_item(i, c, shop_window, items_for_sale)
+                text=f"{item} - ({cost[1]}) - {cost[0]} gold",
+                command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, shop_window, items_for_sale), self.deck.append(Card(i, g))]
             )
             btn.pack(pady=3)
 
@@ -355,10 +356,10 @@ class App(ttk.Frame):
         """Handle item purchase logic."""
         if self.wallet >= cost:
             self.wallet -= cost
+            self.wallet_label.config(text=f"Gold: {self.wallet}")
             messagebox.showinfo("Purchase Successful", f"Successfully purchased {item}!")
             window.destroy()
             # self.check_victory_condition()
-            self.next_encounter()
         else:
             messagebox.showerror("Not enough gold", "You don't have enough gold for that item!")
 
@@ -378,54 +379,11 @@ class App(ttk.Frame):
         """Handle skipping the shop and collecting bonus gold."""
         bonus_gold = 5  # The amount of gold rewarded for skipping
         self.wallet += bonus_gold
+        self.wallet_label.config(text=f"Gold: {self.wallet}")
         messagebox.showinfo("Skip Shop", f"You received {bonus_gold} bonus gold! Total Gold: {self.wallet}")
         window.destroy()  # Close the shop window
         # self.check_victory_condition()
         self.next_encounter()  # Proceed to the next encounter
-
-    def show_shop_window(self):
-        """Open the shop window after defeating the boss."""
-        window = tk.Toplevel(self.root)  # Create a new popup window
-        window.title("Shop")
-        window.geometry("400x300")
-
-        # Show the player's current wallet amount
-        tk.Label(window, text=f"Current Gold: {self.wallet}").pack(pady=10)
-
-        # Shop Instructions
-        tk.Label(window, text="Choose an option:").pack(pady=5)
-
-        # Example of items to purchase
-        items = {
-            "Health Potion": 5,
-            "Shield": 10,
-            "Double Attack": 15
-        }
-
-        buttons = []
-
-        for item, cost in items.items():
-            btn = tk.Button(window, text=f"{item} - {cost} gold",
-                    command=lambda i=item, c=cost, w=window, b=buttons: self.purchase_item(i, c, w, b))
-            
-            btn.pack(pady=3)
-            buttons.append(btn)  # Add the button to the tracking list
-
-        # Option to skip shopping
-        skip_btn = tk.Button(window, text="Skip Shop (Receive Bonus Gold)",
-                command=lambda w=window: self.skip_shop(w)).pack(pady=3)
-        
-        skip_btn.pack(pady=3)
-        buttons.append(skip_btn)
-        
-        # Wait until the shop window closes
-        window.grab_set()  # Prevent interaction with other windows until the shop is closed
-        self.root.wait_window(window)  # Block execution until the shop window is destroyed
-
-    # def check_victory_condition(self):
-    #     """Check if the player has collected all the required cards."""
-    #     if not self.encounters:
-    #         self.game_over_screen("Victory! You conquered all challenges!")
 
     def game_over(self, message):
         """Handle game over scenario."""
