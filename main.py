@@ -28,6 +28,7 @@ class App(ttk.Frame):
         self.wallet = 20
         self.tkFont = tkFont
         self.buttonclicks = 0
+        self.tk = tk
 
         self.start_screen = StartScreen(root, self, tk)
 
