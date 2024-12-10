@@ -64,8 +64,8 @@ class App(ttk.Frame):
         self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4",font=("Old School Adventures", 14), bg='#1B1B1B', fg='white')
         self.turn_label.grid(row=2, column=0)
 
-        self.wallet_label = tk.Label(self.actions_frame, text=f"Gold: {self.wallet}", font=("Poppins", 10), bg='#1B1B1B', fg='white')
-        self.wallet_label.pack()
+        self.wallet_label = tk.Label(self.actions_frame, text=f"🪙 Gold: {self.wallet}", font=("Poppins", 10), bg='#1B1B1B', fg='white')
+        self.wallet_label.pack(side ='left')
 
         self.selected_cards_label = tk.Label(self.actions_frame, text="Selected Cards: None", font=("Poppins", 10), bg='#1B1B1B', fg='white')
         self.selected_cards_label.pack()
