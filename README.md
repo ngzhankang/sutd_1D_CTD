@@ -12,9 +12,7 @@ This repository is to host the notebook that my besties and I created for the 1D
 ```
 ├───assets
 ├───datafiles
-├───zhan kang playground
-│   └───helpers
-└───__pycache__ (Ignored by .gitignore)
+└───__pycache__ (ignored by .gitignore)
 ```
 
 # How to run the code
