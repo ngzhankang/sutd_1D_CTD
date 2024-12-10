@@ -13,7 +13,7 @@ import tkinter.font as tkFont
 class App(ttk.Frame):
     def __init__(self, root):
         self.root = root
-        self.turn_limit = 4  # Start with 4 turns for the first encounter
+        self.turn_limit = 0
         self.current_turn = 1
         self.deck = start_deck()
         self.hand = []
@@ -39,7 +39,7 @@ class App(ttk.Frame):
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
         self.photo = self.tk.PhotoImage(file="./assets/shopbg.png")
-       
+        self.root.title('Study Up Till Death')
    
 
     def setup_ui(self):
@@ -72,11 +72,11 @@ class App(ttk.Frame):
 
    
 
-        self.wallet_label = tk.Label(self.actionsinfo_frame, text=f"🪙Gold: {self.wallet}", font=("Poppins", 13), bg='#1B1B1B', fg='#F1C130')
-        self.wallet_label.pack(side ='left')
-
         self.selected_cards_label = tk.Label(self.actionsinfo_frame, text="Selected Cards: None", font=("Poppins", 13), bg='#1B1B1B', fg='white')
-        self.selected_cards_label.pack(side ='right')
+        self.selected_cards_label.pack()
+
+        self.wallet_label = tk.Label(self.actionsinfo_frame, text=f"🪙Gold: {self.wallet}", font=("Poppins", 13), bg='#1B1B1B', fg='#F1C130')
+        self.wallet_label.pack()
 
         self.message_label = tk.Label(self.actions_frame, text="🃏Select 4 cards to deal damage!", font=("Poppins", 10), bg='#1B1B1B', fg='white')
         self.message_label.pack()
@@ -114,8 +114,9 @@ class App(ttk.Frame):
 
         # GPA scaling logic based on difficulty
         if difficulty == "Term 1":
-            # Term 1: Enemies scale from 1.0 to 5.3 (6 enemies total)
-            gpa_scaling = [1.0, 1.8, 2.5, 3.1, 4.0, 5.3]
+            # Term 1: Enemies scale from 1.0 to 5.3 (9 enemies total)
+            self.turn_limit = 21
+            gpa_scaling = [1.0, 1.6, 2.2, 2.8, 3.4, 4.0, 4.5, 5.1, 5.3]
             for i in range(len(gpa_scaling)):
                 random = randint(0, len(base_enemies)-1)
                 if i == len(gpa_scaling)-1:
@@ -126,8 +127,9 @@ class App(ttk.Frame):
                     encounters.append(Enemy(base_enemies[random], gpa_scaling[i]))   
 
         elif difficulty == "Term 2":
-            # Term 2: Enemies scale from 1.0 to 5.3 (5 enemies total)
-            gpa_scaling = [1.0, 2.0, 2.8, 3.5, 5.3]
+            # Term 2: Enemies scale from 1.0 to 5.3 (7 enemies total)
+            self.turn_limit = 14
+            gpa_scaling = [1.0, 1.7, 2.4, 3.2, 3.9, 4.6, 5.3]
             for i in range(len(gpa_scaling)):
                 random = randint(0, len(base_enemies)-1)
                 if i == len(gpa_scaling)-1:
@@ -138,8 +140,9 @@ class App(ttk.Frame):
                     encounters.append(Enemy(base_enemies[random], gpa_scaling[i]))
 
         elif difficulty == "Term 3":
-            # Term 3: Enemies scale from 1.0 to 5.3 (4 enemies total)
-            gpa_scaling = [1.0, 2.5, 4.0, 5.3]
+            # Term 3: Enemies scale from 1.0 to 5.3 (5 enemies total)
+            self.turn_limit = 7
+            gpa_scaling = [1.0, 2.0, 2.8, 3.5, 5.3]
             for i in range(len(gpa_scaling)):
                 random = randint(0, len(base_enemies)-1)
                 if i == len(gpa_scaling)-1:
@@ -254,6 +257,7 @@ class App(ttk.Frame):
 
         # Check if the enemy is defeated
         if self.current_enemy.gpa <= 0:
+            self.current_turn += 1
             self.message_label.config(text=f"{self.current_enemy.name} defeated!")
             random = randint(1, 700)
             if random == 365:
@@ -271,8 +275,7 @@ class App(ttk.Frame):
         if not self.encounters:
             self.game_over("You won!")
             return
-
-        self.current_turn = 1
+        
         self.current_enemy = self.encounters.pop(0)
         self.turn_label.config(text=f"Turn: {self.current_turn} / {self.turn_limit}")
         self.selected_cards_label.config(text="Selected Cards: None")
@@ -411,6 +414,7 @@ class App(ttk.Frame):
 
     def game_over_screen(self, message):
         """Display a Game Over screen."""
+        
         # Game Over message
         game_over_label = tk.Label(self.root, text=message)
         game_over_label.place(relx=0.5, rely=0.3, anchor="center")
