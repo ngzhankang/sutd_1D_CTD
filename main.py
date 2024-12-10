@@ -332,7 +332,7 @@ class App(ttk.Frame):
         pic_label = self.tk.Label(self.shop_window, image=self.photo)
         pic_label.place(x=0, y=0)
 
-        self.row=tk.Frame(shop_window, bg='#1B1B1B')
+        self.row=tk.Frame(self.shop_window, bg='#1B1B1B')
         self.row.place(relx=0.5, rely=0.2, anchor="center")  # Position top frame in the center
         
         x = (self.shop_window.winfo_screenwidth() - self.shop_window.winfo_reqwidth()) / 2 - 100
