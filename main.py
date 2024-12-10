@@ -49,10 +49,10 @@ class App(ttk.Frame):
         self.stats_frame.place(relx=0.5, rely=0.2, anchor="center")  # Position stats frame
 
         self.cards_frame = tk.Frame(self.root, bg='#1B1B1B')
-        self.cards_frame.place(relx=0.5, rely=0.6, anchor="center")  # Position cards frame
+        self.cards_frame.place(relx=0.5, rely=0.4, anchor="center")  # Position cards frame
 
         self.actions_frame = tk.Frame(self.root, bg='#1B1B1B')
-        self.actions_frame.place(relx=0.5, rely=0.8, anchor="center")  # Position actions frame
+        self.actions_frame.place(relx=0.5, rely=0.7, anchor="center")  # Position actions frame
 
         # Stats Display
         self.enemy_label = tk.Label(self.stats_frame, text="Enemy: None", font=("Old School Adventures", 19), bg='#1B1B1B', fg='#F1C130')
@@ -64,22 +64,22 @@ class App(ttk.Frame):
         self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4",font=("Old School Adventures", 14), bg='#1B1B1B', fg='white')
         self.turn_label.grid(row=2, column=0)
 
-        self.wallet_label = tk.Label(self.actions_frame, text=f"Gold: {self.wallet}")
+        self.wallet_label = tk.Label(self.actions_frame, text=f"Gold: {self.wallet}", font=("Poppins", 10), bg='#1B1B1B', fg='white')
         self.wallet_label.pack()
 
-        self.selected_cards_label = tk.Label(self.actions_frame, text="Selected Cards: None")
+        self.selected_cards_label = tk.Label(self.actions_frame, text="Selected Cards: None", font=("Poppins", 10), bg='#1B1B1B', fg='white')
         self.selected_cards_label.pack()
 
-        self.message_label = tk.Label(self.actions_frame, text="Select 4 cards to deal damage!")
+        self.message_label = tk.Label(self.actions_frame, text="Select 4 cards to deal damage!", font=("Poppins", 10), bg='#1B1B1B', fg='white')
         self.message_label.pack()
 
-        self.reselect_button = tk.Button(self.actions_frame, text="Reselect Cards", command=lambda:[self.update_count(), self.reselect_cards()], width=15, height=1)
+        self.reselect_button = tk.Button(self.actions_frame, text="Reselect Cards", command=lambda:[self.update_count(), self.reselect_cards()], width=15, height=1, font=("Poppins", 10), bg='#1B1B1B', fg='white')
         self.reselect_button.pack(pady=3)
 
-        self.calculate_button = tk.Button(self.actions_frame, text="Calculate Damage", command=self.calculate_damage, width=15, height=1)
+        self.calculate_button = tk.Button(self.actions_frame, text="Calculate Damage", command=self.calculate_damage, width=15, height=1, font=("Poppins", 10), bg='#F35454', fg='white')
         self.calculate_button.pack(pady=3)
 
-        self.confirm_attack_button = tk.Button(self.actions_frame, text="Confirm Attack", command=self.deal_damage, width=15, height=1)
+        self.confirm_attack_button = tk.Button(self.actions_frame, text="Confirm Attack", command=self.deal_damage, width=15, height=1, font=("Poppins", 10), bg='#C90000', fg='white')
         self.confirm_attack_button.pack(pady=3)
 
     def set_difficulty(self, difficulty):
