@@ -38,7 +38,7 @@ class App(ttk.Frame):
         self.root.update_idletasks()  # Update the window size
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
-        self.photo = self.tk.PhotoImage(file="./assets/shopbg.png")
+        self.photo = self.tk.PhotoImage(file="./assets/bgshop.png")
        
    
 
