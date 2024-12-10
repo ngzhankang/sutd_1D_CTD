@@ -257,7 +257,11 @@ class App(ttk.Frame):
 
         # Check if the enemy is defeated
         if self.current_enemy.gpa <= 0:
-            self.current_turn += 1
+            if self.current_turn >= self.turn_limit:
+                self.game_over("Game Over: You ran out of turns!")
+            else:
+                self.current_turn += 1
+            self.turn_label.config(text=f"Turn: {self.current_turn} / {self.turn_limit}")
             self.message_label.config(text=f"{self.current_enemy.name} defeated!")
             random = randint(1, 700)
             if random == 365:
