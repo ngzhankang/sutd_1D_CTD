@@ -167,7 +167,6 @@ class App(ttk.Frame):
 
         # Draw 7 cards from the deck
         self.hand = [card for card in sample(self.deck, 7)]
-        self.selected = [str(card) for card in self.hand]
         self.card_buttons = {}
         for card in self.hand:
             button = tk.Button(
@@ -175,7 +174,7 @@ class App(ttk.Frame):
                 text=f"{card.name}\n({card.grade})",
                 width=self.window_width//110, 
                 height=5,
-                command=lambda c=card: self.select_card(c, self.selected),
+                command=lambda c=card: self.select_card(c),
                 bg = '#BF1010',
                 fg = '#F1C232',
                 font=("Old School Adventures", 10)
@@ -183,19 +182,15 @@ class App(ttk.Frame):
             self.card_buttons[card] = button  # Track card buttons
             button.pack(side="left", padx=5, pady=5)
 
-    def select_card(self, card, hand):
+    def select_card(self, card):
         self.message_label.config(text="Select 4 cards to deal damage!")
         """Select or deselect a card for the player."""
-        if str(card) in self.selected_cards and str(card) not in hand: # Deselect the card
-            hand.append(str(card))
+        if str(card) in self.selected_cards: # Deselect the card
             self.selected_cards.remove(str(card))
-            self.selected_classcards.remove(card)
             self.card_buttons.get(card).config(bg = '#BF1010', fg = '#F1C232', font=("Old School Adventures", 10))
         else: # Select the card
             if len(self.selected_cards) < 4:  # Limit to 4 cards
-                hand.remove(str(card))
                 self.selected_cards.append(str(card))
-                self.selected_classcards.append(card)
            
                 self.card_buttons.get(card).config(bg = '#C4BFFA', fg = '#05349B', font=("Old School Adventures", 10))
 
@@ -225,8 +220,6 @@ class App(ttk.Frame):
                 fg = '#F1C232',
                 font=("Old School Adventures", 10))
         self.selected_cards = []  # Clear the current card selection
-        self.selected_classcards = []
-        self.selected = [str(card) for card in self.hand]
         self.message_label.config(text="Select 4 cards to deal damage!")
         self.selected_cards_label.config(text="Selected Cards: None")  # Reset the label
 
