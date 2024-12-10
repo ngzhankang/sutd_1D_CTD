@@ -63,10 +63,10 @@ class App(ttk.Frame):
         self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4",font=("Old School Adventures", 13), bg='#1B1B1B', fg='#F1C130')
         self.turn_label.grid(row=0, column=0)
 
-        self.enemy_label = tk.Label(self.stats_frame, text="👹Enemy: None", font=("Old School Adventures", 21), bg='#1B1B1B', fg='#FF4F4F')
+        self.enemy_label = tk.Label(self.stats_frame, text="Enemy: None", font=("Old School Adventures", 21), bg='#1B1B1B', fg='white')
         self.enemy_label.grid(row=2, column=0)
 
-        self.enemy_health_label = tk.Label(self.stats_frame, text="Enemy Health: N/A", font=("Old School Adventures", 13), bg='#1B1B1B', fg='white')  # Display for enemy health
+        self.enemy_health_label = tk.Label(self.stats_frame, text="❤️‍🩹Enemy Health: N/A", font=("Old School Adventures", 13), bg='#1B1B1B', fg='#FF4F4F')  # Display for enemy health
         self.enemy_health_label.grid(row=4, column=0)
 
    
@@ -77,7 +77,7 @@ class App(ttk.Frame):
         self.selected_cards_label = tk.Label(self.actionsinfo_frame, text="Selected Cards: None", font=("Poppins", 13), bg='#1B1B1B', fg='white')
         self.selected_cards_label.pack(side ='right')
 
-        self.message_label = tk.Label(self.actions_frame, text="Select 4 cards to deal damage!", font=("Poppins", 10), bg='#1B1B1B', fg='white')
+        self.message_label = tk.Label(self.actions_frame, text="🃏Select 4 cards to deal damage!", font=("Poppins", 10), bg='#1B1B1B', fg='white')
         self.message_label.pack()
 
         self.reselect_button = tk.Button(self.actions_frame, text="Reselect Cards", command=lambda:[self.update_count(), self.reselect_cards()], width=15, height=1, font=("Poppins", 10), bg='#F0F0F0', fg='#444444')
