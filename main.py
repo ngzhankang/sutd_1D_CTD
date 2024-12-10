@@ -1,4 +1,3 @@
-# im gonna mess around with this file so dont mind me(for real)
 # import library
 import tkinter as tk
 from tkinter import messagebox, ttk
@@ -371,17 +370,18 @@ class App(ttk.Frame):
         # Create a popup window for the shop
         self.shop_window = tk.Toplevel(self.root)
         self.shop_window.title("Shop")
-        self.shop_window.geometry("400x500")
+        self.shop_window.state("zoomed")
         pic_label = self.tk.Label(self.shop_window, image=self.photo)
         pic_label.place(x=0, y=0)
 
-        self.row=tk.Frame(self.shop_window, bg='#1B1B1B')
-        self.row.place(relx=0.5, rely=0.2, anchor="center")  # Position top frame in the center
-        
-        x = (self.shop_window.winfo_screenwidth() - self.shop_window.winfo_reqwidth()) / 2 - 100
-        y = (self.shop_window.winfo_screenheight() - self.shop_window.winfo_reqheight()) / 2 - 100
-        self.shop_window.geometry("+%d+%d" % (x, y))
-        self.shop_window.deiconify()
+        self.shop_title=tk.Frame(self.shop_window, bg='#1B1B1B')
+        self.shop_title.place(relx=0.5, rely=0.1, anchor="center")  # Position top frame in the center
+
+        self.shop_items=tk.Frame(self.shop_window, bg='#1B1B1B')
+        self.shop_items.place(relx=0.5, rely=0.5, anchor="center")  # Position top frame in the center
+
+        self.shop_exit=tk.Frame(self.shop_window, bg='#1B1B1B')
+        self.shop_exit.place(relx=0.5, rely=0.8, anchor="center")  # Position top frame in the center
 
         # List of items in the shop
         coursework = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
@@ -392,37 +392,40 @@ class App(ttk.Frame):
         self.shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(self.shop_window))  # Disable the close button entirely
 
         # Display the items for sale
-        tk.Label(self.shop_window, text="Welcome to the shop!").pack(pady=10)
-        
-        shop_list=[]
-        for item, cost in items_for_sale.items():
-            btn = tk.Button(
-                self.row,
-                text=f"{item} - ({cost[1]}) - {cost[0]} gold",
-                command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, self.shop_window, items_for_sale), self.deck.append(Card(i, g))]
-            )
-            shop_list.append(btn)
+        tk.Label(self.shop_title, text="Welcome to the shop!").pack(pady=10)
 
+
+
+        # Display items in a 4x4 grid
+        max_columns = 4  # Maximum columns per row
+        row_index = 0
         col_index = 0
-        for row_index, row in enumerate(shop_list) and col_index < 12:
-            btns = tk.Button(root, text=row, width=5)
-            btns.grid(row=row_index, column=col_index, padx=(1, 1))
+
+        for item, cost in items_for_sale.items():
+            # Create the button
+            button = tk.Button(
+                self.shop_items,
+                text=f"{item}\n({cost[1]}) - {cost[0]} gold",
+                width=15,
+                height=3,
+                command=lambda i=item, c=cost[0], g=cost[1]: [
+                    self.purchase_item(i, c, self.shop_window, items_for_sale),
+                    self.deck.append(Card(i, g))
+                ]
+            )
+            # Place the button in the grid
+            button.grid(row=row_index, column=col_index, padx=5, pady=5)
+
+            # Update row and column indices for the next button
             col_index += 1
-
-
-        # shop_row1=shop_list[0:4]
-        # shop_row2=shop_list[4:9]
-        # shop_row3=shop_list[9:13]
-
-        # for i in range (2,9,3):
-        #     for btn in shop_row1: btn.grid(row=2, column=i, padx=(1, 1))
-        #     for btn in shop_row2: btn.grid(row=5, column=i)
-        #     for btn in shop_row3: btn.grid(row=7, column=i)
+            if col_index >= max_columns:
+                col_index = 0
+                row_index += 1
   
 
         # Option to skip shopping
         skip_button = tk.Button(
-            self.shop_window,
+            self.shop_exit,
             text="Skip and collect bonus gold",
             command=lambda: self.skip_shop(self.shop_window)
         )
