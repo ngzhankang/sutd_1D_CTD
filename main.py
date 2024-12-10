@@ -372,14 +372,22 @@ class App(ttk.Frame):
                 command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, self.shop_window, items_for_sale), self.deck.append(Card(i, g))]
             )
             shop_list.append(btn)
-        shop_row1=shop_list[0:4]
-        shop_row2=shop_list[4:9]
-        shop_row3=shop_list[9:13]
 
-        for i in range (2,9,3):
-            for btn in shop_row1: btn.grid(row=2, column=i, padx=(1, 1))
-            for btn in shop_row2: btn.grid(row=5, column=i)
-            for btn in shop_row3: btn.grid(row=7, column=i)
+        col_index = 0
+        for row_index, row in enumerate(shop_list) and col_index < 12:
+            btns = tk.Button(root, text=row, width=5)
+            btns.grid(row=row_index, column=col_index, padx=(1, 1))
+            col_index += 1
+
+
+        # shop_row1=shop_list[0:4]
+        # shop_row2=shop_list[4:9]
+        # shop_row3=shop_list[9:13]
+
+        # for i in range (2,9,3):
+        #     for btn in shop_row1: btn.grid(row=2, column=i, padx=(1, 1))
+        #     for btn in shop_row2: btn.grid(row=5, column=i)
+        #     for btn in shop_row3: btn.grid(row=7, column=i)
   
 
         # Option to skip shopping
