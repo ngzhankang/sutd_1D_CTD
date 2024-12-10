@@ -35,7 +35,7 @@ class App(ttk.Frame):
         self.root.update_idletasks()  # Update the window size
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
-        self.photo = self.tk.PhotoImage(file="./assets/bgshop.png")
+        self.photo = self.tk.PhotoImage(file="./assets/bgshopsmall.png")
         self.winphoto = self.tk.PhotoImage(file="./assets/winningbg2.png")
         self.photoDeck = self.tk.PhotoImage(file="./assets/bgimage.png")
         self.root.title('Study Up Till Death')
@@ -231,11 +231,11 @@ class App(ttk.Frame):
         self.calculate_button.config(state=tk.DISABLED)
 
         if self.buttonclicks == 69:
-            random = randint(1, 2)
-            if random == 1:
-                self.show_event_window()
-            elif random == 2:
+            random = randint(1, 10)
+            if random == 5:
                 self.show_event2_window()
+            else:
+                self.show_event_window()
 
     def update_count(self):
         self.buttonclicks += 1
@@ -301,6 +301,7 @@ class App(ttk.Frame):
         if result:
             self.skip_shop(window)
             # If 'No', simply return and let the user stay in the shop window
+        self.bring_main_to_front()
 
     def close_window(self, window):
         window.destroy()  # Close the shop window
@@ -425,12 +426,10 @@ class App(ttk.Frame):
         self.shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(self.shop_window))  # Disable the close button entirely
 
         # Display the items for sale
-        tk.Label(self.shop_title, text="Welcome to the shop!").pack(pady=10)
-
-
+        tk.Label(self.shop_title, text="Welcome to the shop!", font=("Old School Adventures", 20), bg='#1B1B1B', fg='#F1C232').pack(pady=10)
 
         # Display items in a 4x4 grid
-        max_columns = 4  # Maximum columns per row
+        max_columns = 3  # Maximum columns per row
         row_index = 0
         col_index = 0
 
@@ -441,6 +440,9 @@ class App(ttk.Frame):
                 text=f"{item}\n({cost[1]}) - {cost[0]} gold",
                 width=15,
                 height=3,
+                bg = '#F1C232',
+                fg = 'white',
+                font=("Old School Adventures", 9),
                 command=lambda i=item, c=cost[0], g=cost[1]: [
                     self.purchase_item(i, c, self.shop_window, items_for_sale),
                     self.deck.append(Card(i, g))
@@ -460,7 +462,10 @@ class App(ttk.Frame):
         skip_button = tk.Button(
             self.shop_exit,
             text="Skip and collect bonus gold",
-            command=lambda: self.skip_shop(self.shop_window)
+            command=lambda: self.skip_shop(self.shop_window), 
+            bg = '#1C000E',
+            fg = 'white',
+            font=("Poppins", 9),
         )
         skip_button.pack(pady=10)
 
@@ -476,7 +481,6 @@ class App(ttk.Frame):
             self.wallet_label.config(text=f"🪙Gold: {self.wallet}")
             messagebox.showinfo("Purchase Successful", f"Successfully purchased {item}!")
             window.destroy()
-            # self.check_victory_condition()
         else:
             messagebox.showerror("Not enough gold", "You don't have enough gold for that item!")
 
@@ -491,7 +495,6 @@ class App(ttk.Frame):
 
 
         # Allow exiting the shop screen after the choice is made
-        # window.destroy()
         self.next_encounter()
 
     def skip_shop(self, window):
@@ -501,7 +504,6 @@ class App(ttk.Frame):
         self.wallet_label.config(text=f"Gold: {self.wallet}")
         messagebox.showinfo("Skip Shop", f"You received {bonus_gold} bonus gold! Total Gold: {self.wallet}")
         window.destroy()  # Close the shop window
-        # self.check_victory_condition()
         self.next_encounter()  # Proceed to the next encounter
 
     def game_over(self, message):
