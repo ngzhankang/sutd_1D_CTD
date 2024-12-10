@@ -71,9 +71,6 @@ class App(ttk.Frame):
         self.enemy_health_label.grid(row=4, column=0)
 
 
-        self.wallet_label = tk.Label(self.actionsinfo_frame, text=f"🪙Gold: {self.wallet}", font=("Poppins", 13), bg='#1B1B1B', fg='#F1C130')
-        self.wallet_label.pack(side ='left')
-
         self.selected_cards_label = tk.Label(self.actionsinfo_frame, text="Selected Cards: None", font=("Poppins", 13), bg='#1B1B1B', fg='white')
         self.selected_cards_label.pack()
 
