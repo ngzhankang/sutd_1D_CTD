@@ -57,15 +57,18 @@ class App(ttk.Frame):
         self.actions_frame = tk.Frame(self.root, bg='#1B1B1B')
         self.actions_frame.place(relx=0.5, rely=0.7, anchor="center")  # Position actions frame
 
-        # Stats Display
-        self.enemy_label = tk.Label(self.stats_frame, text="Enemy: None", font=("Old School Adventures", 17), bg='#1B1B1B', fg='#F1C130')
-        self.enemy_label.grid(row=0, column=0)
+        # Stats Display     
 
-        self.enemy_health_label = tk.Label(self.stats_frame, text="Enemy Health: N/A", font=("Old School Adventures", 19), bg='#1B1B1B', fg='#F1C130')  # Display for enemy health
-        self.enemy_health_label.grid(row=1, column=0)
+        self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4",font=("Old School Adventures", 13), bg='#1B1B1B', fg='#F1C130')
+        self.turn_label.grid(row=0, column=0)
 
-        self.turn_label = tk.Label(self.stats_frame, text="Turn: 1 / 4",font=("Old School Adventures", 14), bg='#1B1B1B', fg='white')
-        self.turn_label.grid(row=2, column=0)
+        self.enemy_label = tk.Label(self.stats_frame, text="👹Enemy: None", font=("Old School Adventures", 21), bg='#1B1B1B', fg='#FF4F4F')
+        self.enemy_label.grid(row=2, column=0)
+
+        self.enemy_health_label = tk.Label(self.stats_frame, text="Enemy Health: N/A", font=("Old School Adventures", 13), bg='#1B1B1B', fg='white')  # Display for enemy health
+        self.enemy_health_label.grid(row=4, column=0)
+
+   
 
         self.wallet_label = tk.Label(self.actionsinfo_frame, text=f"🪙 Gold: {self.wallet}", font=("Poppins", 13), bg='#1B1B1B', fg='#F1C130')
         self.wallet_label.pack(side ='left')
@@ -169,7 +172,7 @@ class App(ttk.Frame):
                 command=lambda c=card: self.select_card(c, self.selected),
                 bg = '#BF1010',
                 fg = '#F1C232',
-                font=("Old School Adventures", 9)
+                font=("Old School Adventures", 10)
             )
             self.card_buttons[card] = button  # Track card buttons
             button.pack(side="left", padx=5, pady=5)
@@ -181,14 +184,14 @@ class App(ttk.Frame):
             hand.append(str(card))
             self.selected_cards.remove(str(card))
             self.selected_classcards.remove(card)
-            self.card_buttons.get(card).config(bg = '#BF1010', fg = '#F1C232', font=("Old School Adventures", 9))
+            self.card_buttons.get(card).config(bg = '#BF1010', fg = '#F1C232', font=("Old School Adventures", 10))
         else: # Select the card
             if len(self.selected_cards) < 4:  # Limit to 4 cards
                 hand.remove(str(card))
                 self.selected_cards.append(str(card))
                 self.selected_classcards.append(card)
            
-                self.card_buttons.get(card).config(bg = '#C4BFFA', fg = 'black', font=("Old School Adventures", 9))
+                self.card_buttons.get(card).config(bg = '#C4BFFA', fg = '#05349B', font=("Old School Adventures", 10))
 
         # Update the selected cards label
         self.selected_cards_label.config(text=f"Selected Cards: {', '.join(self.selected_cards)}", fg='#C4BFFA', font=("poppins",13))
@@ -214,7 +217,7 @@ class App(ttk.Frame):
         for key in self.card_buttons.keys():
             self.card_buttons.get(key).config(bg = '#CC0000',
                 fg = '#F1C232',
-                font=("Old School Adventures", 9))
+                font=("Old School Adventures", 10))
         self.selected_cards = []  # Clear the current card selection
         self.selected_classcards = []
         self.selected = [str(card) for card in self.hand]
@@ -271,7 +274,7 @@ class App(ttk.Frame):
         self.current_enemy = self.encounters.pop(0)
         self.turn_label.config(text=f"Turn: {self.current_turn} / {self.turn_limit}")
         self.selected_cards_label.config(text="Selected Cards: None")
-        self.enemy_label.config(text=f"Enemy: {self.current_enemy.name}")
+        self.enemy_label.config(text=f"Enemy:  {self.current_enemy.name}")
         self.message_label.config(text="Select 4 cards to deal damage!")
         self.enemy_health_label.config(text=f"Enemy Health: {self.current_enemy.gpa} GPA")  # Display initial enemy health
         self.draw_hand()
