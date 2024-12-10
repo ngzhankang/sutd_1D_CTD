@@ -230,11 +230,11 @@ class App(ttk.Frame):
         self.calculate_button.config(state=tk.DISABLED)
 
         if self.buttonclicks == 69:
-            random = randint(1, 2)
-            if random == 1:
-                self.show_event_window()
-            elif random == 2:
+            random = randint(1, 10)
+            if random == 5:
                 self.show_event2_window()
+            else:
+                self.show_event_window()
 
     def update_count(self):
         self.buttonclicks += 1
