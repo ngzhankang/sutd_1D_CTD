@@ -33,7 +33,6 @@ class App(ttk.Frame):
         self.start_screen = StartScreen(root, self, tk)
 
         # Maximise the window and center everything
-        self.root.state('normal')  # Ensure the window is not in fullscreen state
         self.root.geometry(f"{self.root.winfo_screenwidth()}x{self.root.winfo_screenheight()}+0+0")  # Maximise window size
         self.root.update_idletasks()  # Update the window size
         self.window_width = self.root.winfo_width()  # Get window width
