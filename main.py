@@ -231,7 +231,11 @@ class App(ttk.Frame):
         self.calculate_button.config(state=tk.DISABLED)
 
         if self.buttonclicks == 69:
-            self.show_event_window()
+            random = randint(1, 2)
+            if random == 1:
+                self.show_event_window()
+            elif random == 2:
+                self.show_event2_window()
 
     def update_count(self):
         self.buttonclicks += 1
@@ -320,11 +324,34 @@ class App(ttk.Frame):
 
         self.deck.append(Card("F*CKED UP", "F"))
 
-        btn = tk.Button(event_window, text='RIP :(', command=lambda: [self.close_window(event_window), self.next_encounter()])
+        btn = tk.Button(event_window, text='RIP :(', command=lambda: self.close_window(event_window))
         btn.place(relx=0.5, rely=0.6, anchor='center')
 
-        event_window.protocol("WM_DELETE_WINDOW", lambda: [self.close_window(event_window), self.next_encounter()])
+        event_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event_window))
 
+    def show_event2_window(self):
+        """Open event 2 window"""
+        event2_window = tk.Toplevel(self.root)  # Create a new popup window
+        event2_window.title("Fortunate Encounter")
+        event2_window.geometry("400x300")
+        # moves window to center
+        x = (event2_window.winfo_screenwidth() - event2_window.winfo_reqwidth()) / 2 - 100
+        y = (event2_window.winfo_screenheight() - event2_window.winfo_reqheight()) / 2 - 100
+        event2_window.geometry("+%d+%d" % (x, y))
+        event2_window.deiconify()
+
+        name = tk.Label(event2_window, text='LUCKY YOU!')
+        name.place(relx=0.5, rely=0.4, anchor='center')
+
+        addcard = tk.Label(event2_window, text='Card with Grade A- added to deck!')
+        addcard.place(relx=0.5, rely=0.5, anchor='center')
+
+        self.deck.append(Card("Productive Study Date", "A-"))
+
+        btn = tk.Button(event2_window, text='cutee', command=lambda: self.close_window(event2_window))
+        btn.place(relx=0.5, rely=0.6, anchor='center')
+
+        event2_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event2_window))
 
     def show_deck(self):
         """Display deck window."""
