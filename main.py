@@ -300,6 +300,7 @@ class App(ttk.Frame):
         if result:
             self.skip_shop(window)
             # If 'No', simply return and let the user stay in the shop window
+        self.bring_main_to_front()
 
     def close_window(self, window):
         window.destroy()  # Close the shop window
@@ -425,7 +426,7 @@ class App(ttk.Frame):
 
 
         # Display items in a 4x4 grid
-        max_columns = 4  # Maximum columns per row
+        max_columns = 3  # Maximum columns per row
         row_index = 0
         col_index = 0
 
@@ -471,7 +472,6 @@ class App(ttk.Frame):
             self.wallet_label.config(text=f"🪙Gold: {self.wallet}")
             messagebox.showinfo("Purchase Successful", f"Successfully purchased {item}!")
             window.destroy()
-            # self.check_victory_condition()
         else:
             messagebox.showerror("Not enough gold", "You don't have enough gold for that item!")
 
@@ -486,7 +486,6 @@ class App(ttk.Frame):
 
 
         # Allow exiting the shop screen after the choice is made
-        # window.destroy()
         self.next_encounter()
 
     def skip_shop(self, window):
@@ -496,7 +495,6 @@ class App(ttk.Frame):
         self.wallet_label.config(text=f"Gold: {self.wallet}")
         messagebox.showinfo("Skip Shop", f"You received {bonus_gold} bonus gold! Total Gold: {self.wallet}")
         window.destroy()  # Close the shop window
-        # self.check_victory_condition()
         self.next_encounter()  # Proceed to the next encounter
 
     def game_over(self, message):
