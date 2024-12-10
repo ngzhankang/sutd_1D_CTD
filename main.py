@@ -423,8 +423,6 @@ class App(ttk.Frame):
         # Display the items for sale
         tk.Label(self.shop_title, text="Welcome to the shop!", font=("Old School Adventures", 20), bg='#1B1B1B', fg='#F1C232').pack(pady=10)
 
-
-
         # Display items in a 4x4 grid
         max_columns = 3  # Maximum columns per row
         row_index = 0
