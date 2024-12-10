@@ -25,7 +25,7 @@ class App(ttk.Frame):
         self.selected = []
         self.confirm_button = None  # Track the confirmation button to avoid duplicates
         self.card_buttons = {}  # List to keep track of card buttons
-        self.wallet = 20
+        self.wallet = 0
         self.tkFont = tkFont
         self.buttonclicks = 0
         self.tk = tk
@@ -310,7 +310,7 @@ class App(ttk.Frame):
     def show_event_window(self):
         """Open event window"""
         event_window = tk.Toplevel(self.root)  # Create a new popup window
-        event_window.title("Special Event")
+        event_window.title("Clown Encounter")
         event_window.geometry("400x300")
         # moves window to center
         x = (event_window.winfo_screenwidth() - event_window.winfo_reqwidth()) / 2 - 100
@@ -334,17 +334,17 @@ class App(ttk.Frame):
     def show_shop(self):
         """Display a shop after defeating the boss."""
         # Create a popup window for the shop
-        shop_window = tk.Toplevel(self.root)
-        shop_window.title("Shop")
-        shop_window.geometry("400x500")
-        pic_label = self.tk.Label(shop_window, image=self.photo)
+        self.shop_window = tk.Toplevel(self.root)
+        self.shop_window.title("Shop")
+        self.shop_window.geometry("400x500")
+        pic_label = self.tk.Label(self.shop_window, image=self.photo)
         pic_label.place(x=0, y=0)
 
 
-        x = (shop_window.winfo_screenwidth() - shop_window.winfo_reqwidth()) / 2 - 100
-        y = (shop_window.winfo_screenheight() - shop_window.winfo_reqheight()) / 2 - 100
-        shop_window.geometry("+%d+%d" % (x, y))
-        shop_window.deiconify()
+        x = (self.shop_window.winfo_screenwidth() - self.shop_window.winfo_reqwidth()) / 2 - 100
+        y = (self.shop_window.winfo_screenheight() - self.shop_window.winfo_reqheight()) / 2 - 100
+        self.shop_window.geometry("+%d+%d" % (x, y))
+        self.shop_window.deiconify()
 
         # List of items in the shop
         coursework = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
@@ -352,26 +352,31 @@ class App(ttk.Frame):
         items_for_sale = RandomnizeShopCards.shop(root, coursework, ownGrade)
 
         # Prevent user from closing the window with the X button
-        shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(shop_window))  # Disable the close button entirely
+        self.shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(self.shop_window))  # Disable the close button entirely
 
         # Display the items for sale
-        tk.Label(shop_window, text="Welcome to the shop!").pack(pady=10)
+        tk.Label(self.shop_window, text="Welcome to the shop!").pack(pady=10)
         
         for item, cost in items_for_sale.items():
             btn = tk.Button(
-                shop_window,
+                self.shop_window,
                 text=f"{item} - ({cost[1]}) - {cost[0]} gold",
-                command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, shop_window, items_for_sale), self.deck.append(Card(i, g))]
+                command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, self.shop_window, items_for_sale), self.deck.append(Card(i, g))]
             )
             btn.pack(side='left')
 
         # Option to skip shopping
         skip_button = tk.Button(
-            shop_window,
+            self.shop_window,
             text="Skip and collect bonus gold",
-            command=lambda: self.skip_shop(shop_window)
+            command=lambda: self.skip_shop(self.shop_window)
         )
         skip_button.pack(pady=10)
+
+    def bring_main_to_front(self):
+        self.shop_window.lift()  # Raise the main window
+        self.shop_window.attributes('-topmost', True)  # Keep it on top
+        self.shop_window.attributes('-topmost', False)  # Allow normal behaviour afterward
 
     def purchase_item(self, item, cost, window, buttons):
         """Handle item purchase logic."""
@@ -383,6 +388,8 @@ class App(ttk.Frame):
             # self.check_victory_condition()
         else:
             messagebox.showerror("Not enough gold", "You don't have enough gold for that item!")
+
+            self.bring_main_to_front()
 
             # Disable all buttons to prevent retry spamming
             for btn in buttons:
