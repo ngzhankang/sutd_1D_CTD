@@ -22,7 +22,6 @@ class App(ttk.Frame):
         self.difficulty = None
         self.selected_cards = []
         self.selected_classcards = []
-        self.selected = []
         self.confirm_button = None  # Track the confirmation button to avoid duplicates
         self.card_buttons = {}  # List to keep track of card buttons
         self.wallet = 20
@@ -187,11 +186,12 @@ class App(ttk.Frame):
         """Select or deselect a card for the player."""
         if str(card) in self.selected_cards: # Deselect the card
             self.selected_cards.remove(str(card))
+            self.selected_classcards.remove(card)
             self.card_buttons.get(card).config(bg = '#BF1010', fg = '#F1C232', font=("Old School Adventures", 10))
         else: # Select the card
             if len(self.selected_cards) < 4:  # Limit to 4 cards
                 self.selected_cards.append(str(card))
-           
+                self.selected_classcards.append(card)
                 self.card_buttons.get(card).config(bg = '#C4BFFA', fg = '#05349B', font=("Old School Adventures", 10))
 
         # Update the selected cards label
