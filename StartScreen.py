@@ -12,11 +12,12 @@ class StartScreen:
         pic_label = self.tk.Label(self.root, image=self.photo)
         pic_label.pack()
 
-        self.welcome_label = self.tk.Label(self.root, text="'Study Up Till Death'", font=("Old School Adventures", 32))
-        self.welcome_label.place(relx=0.5, rely=0.2, anchor="center")  # Center the title label
+        self.welcome_label = self.tk.Label(self.root, text="'Study Up Till Death'", font=("Old School Adventures", 33) , bg='#1B1B1B', fg='#F1C130')
+        self.welcome_label.place(relx=0.5, rely=0.23, anchor="center")  # Center the title label
 
-        self.title_label = self.tk.Label(self.root, text="Select Difficulty", font=("Old School Adventures", 20))
-        self.title_label.place(relx=0.5, rely=0.35, anchor="center")  # Center the title label
+
+        self.title_label = self.tk.Label(self.root, text="Select Difficulty", font=("Old School Adventures", 20),bg='#1B1B1B', fg='white')
+        self.title_label.place(relx=0.5, rely=0.37, anchor="center")  # Center the title label
 
         # Buttons for difficulty
         self.term1_button = self.tk.Button(self.root, text="Term 1 (Easy)", font=("Old School Adventures", 8), width=20, height=2, bg='#59BB7B', fg='black', command=lambda: self.start_game("Term 1"))
