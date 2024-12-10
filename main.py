@@ -72,7 +72,7 @@ class App(ttk.Frame):
 
    
 
-        self.wallet_label = tk.Label(self.actionsinfo_frame, text=f"🪙 Gold: {self.wallet}", font=("Poppins", 13), bg='#1B1B1B', fg='#F1C130')
+        self.wallet_label = tk.Label(self.actionsinfo_frame, text=f"🪙Gold: {self.wallet}", font=("Poppins", 13), bg='#1B1B1B', fg='#F1C130')
         self.wallet_label.pack(side ='left')
 
         self.selected_cards_label = tk.Label(self.actionsinfo_frame, text="Selected Cards: None", font=("Poppins", 13), bg='#1B1B1B', fg='white')
@@ -333,11 +333,8 @@ class App(ttk.Frame):
         shop_window.title("Shop")
         shop_window.geometry("400x500")
         pic_label = self.tk.Label(shop_window, image=self.photo)
-        pic_label.pack()
+        pic_label.place(x=0, y=0)
 
-        # self.photo = self.tk.PhotoImage(file="./assets/shopbg.png")
-        # pic_label = self.tk.Label(self.root, image=self.photo)
-        # pic_label.pack()
 
         x = (shop_window.winfo_screenwidth() - shop_window.winfo_reqwidth()) / 2 - 100
         y = (shop_window.winfo_screenheight() - shop_window.winfo_reqheight()) / 2 - 100
@@ -361,7 +358,7 @@ class App(ttk.Frame):
                 text=f"{item} - ({cost[1]}) - {cost[0]} gold",
                 command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, shop_window, items_for_sale), self.deck.append(Card(i, g))]
             )
-            btn.pack(pady=3, side='left')
+            btn.pack(side='left')
 
         # Option to skip shopping
         skip_button = tk.Button(
@@ -375,7 +372,7 @@ class App(ttk.Frame):
         """Handle item purchase logic."""
         if self.wallet >= cost:
             self.wallet -= cost
-            self.wallet_label.config(text=f"Gold: {self.wallet}")
+            self.wallet_label.config(text=f"🪙Gold: {self.wallet}")
             messagebox.showinfo("Purchase Successful", f"Successfully purchased {item}!")
             window.destroy()
             # self.check_victory_condition()
