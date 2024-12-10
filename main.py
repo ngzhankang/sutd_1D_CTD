@@ -1,4 +1,3 @@
-# im gonna mess around with this file so dont mind me(for real)
 # import library
 import tkinter as tk
 from tkinter import messagebox, ttk
@@ -231,7 +230,11 @@ class App(ttk.Frame):
         self.calculate_button.config(state=tk.DISABLED)
 
         if self.buttonclicks == 69:
-            self.show_event_window()
+            random = randint(1, 2)
+            if random == 1:
+                self.show_event_window()
+            elif random == 2:
+                self.show_event2_window()
 
     def update_count(self):
         self.buttonclicks += 1
@@ -320,11 +323,34 @@ class App(ttk.Frame):
 
         self.deck.append(Card("F*CKED UP", "F"))
 
-        btn = tk.Button(event_window, text='RIP :(', command=lambda: [self.close_window(event_window), self.next_encounter()])
+        btn = tk.Button(event_window, text='RIP :(', command=lambda: self.close_window(event_window))
         btn.place(relx=0.5, rely=0.6, anchor='center')
 
-        event_window.protocol("WM_DELETE_WINDOW", lambda: [self.close_window(event_window), self.next_encounter()])
+        event_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event_window))
 
+    def show_event2_window(self):
+        """Open event 2 window"""
+        event2_window = tk.Toplevel(self.root)  # Create a new popup window
+        event2_window.title("Fortunate Encounter")
+        event2_window.geometry("400x300")
+        # moves window to center
+        x = (event2_window.winfo_screenwidth() - event2_window.winfo_reqwidth()) / 2 - 100
+        y = (event2_window.winfo_screenheight() - event2_window.winfo_reqheight()) / 2 - 100
+        event2_window.geometry("+%d+%d" % (x, y))
+        event2_window.deiconify()
+
+        name = tk.Label(event2_window, text='LUCKY YOU!')
+        name.place(relx=0.5, rely=0.4, anchor='center')
+
+        addcard = tk.Label(event2_window, text='Card with Grade A- added to deck!')
+        addcard.place(relx=0.5, rely=0.5, anchor='center')
+
+        self.deck.append(Card("Productive Study Date", "A-"))
+
+        btn = tk.Button(event2_window, text='cutee', command=lambda: self.close_window(event2_window))
+        btn.place(relx=0.5, rely=0.6, anchor='center')
+
+        event2_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(event2_window))
 
     def show_deck(self):
         """Display deck window."""
@@ -372,17 +398,18 @@ class App(ttk.Frame):
         # Create a popup window for the shop
         self.shop_window = tk.Toplevel(self.root)
         self.shop_window.title("Shop")
-        self.shop_window.geometry("400x500")
+        self.shop_window.state("zoomed")
         pic_label = self.tk.Label(self.shop_window, image=self.photo)
         pic_label.place(x=0, y=0)
 
-        self.row=tk.Frame(self.shop_window, bg='#1B1B1B')
-        self.row.place(relx=0.5, rely=0.2, anchor="center")  # Position top frame in the center
-        
-        x = (self.shop_window.winfo_screenwidth() - self.shop_window.winfo_reqwidth()) / 2 - 100
-        y = (self.shop_window.winfo_screenheight() - self.shop_window.winfo_reqheight()) / 2 - 100
-        self.shop_window.geometry("+%d+%d" % (x, y))
-        self.shop_window.deiconify()
+        self.shop_title=tk.Frame(self.shop_window, bg='#1B1B1B')
+        self.shop_title.place(relx=0.5, rely=0.1, anchor="center")  # Position top frame in the center
+
+        self.shop_items=tk.Frame(self.shop_window, bg='#1B1B1B')
+        self.shop_items.place(relx=0.5, rely=0.5, anchor="center")  # Position top frame in the center
+
+        self.shop_exit=tk.Frame(self.shop_window, bg='#1B1B1B')
+        self.shop_exit.place(relx=0.5, rely=0.8, anchor="center")  # Position top frame in the center
 
         # List of items in the shop
         coursework = ["Study", "Research", "Extra Work", "Essay", "Lab Work", "Group Project", "Reading", "Quiz", " 3D Print", "Consultation", "Peer Review", "Presentation"]
@@ -393,37 +420,40 @@ class App(ttk.Frame):
         self.shop_window.protocol("WM_DELETE_WINDOW", lambda: self.confirm_close(self.shop_window))  # Disable the close button entirely
 
         # Display the items for sale
-        tk.Label(self.shop_window, text="Welcome to the shop!").pack(pady=10)
-        
-        shop_list=[]
-        for item, cost in items_for_sale.items():
-            btn = tk.Button(
-                self.row,
-                text=f"{item} - ({cost[1]}) - {cost[0]} gold",
-                command=lambda i=item, c=cost[0], g=cost[1]: [self.purchase_item(i, c, self.shop_window, items_for_sale), self.deck.append(Card(i, g))]
-            )
-            shop_list.append(btn)
+        tk.Label(self.shop_title, text="Welcome to the shop!").pack(pady=10)
 
+
+
+        # Display items in a 4x4 grid
+        max_columns = 4  # Maximum columns per row
+        row_index = 0
         col_index = 0
-        for row_index, row in enumerate(shop_list) and col_index < 12:
-            btns = tk.Button(root, text=row, width=5)
-            btns.grid(row=row_index, column=col_index, padx=(1, 1))
+
+        for item, cost in items_for_sale.items():
+            # Create the button
+            button = tk.Button(
+                self.shop_items,
+                text=f"{item}\n({cost[1]}) - {cost[0]} gold",
+                width=15,
+                height=3,
+                command=lambda i=item, c=cost[0], g=cost[1]: [
+                    self.purchase_item(i, c, self.shop_window, items_for_sale),
+                    self.deck.append(Card(i, g))
+                ]
+            )
+            # Place the button in the grid
+            button.grid(row=row_index, column=col_index, padx=5, pady=5)
+
+            # Update row and column indices for the next button
             col_index += 1
-
-
-        # shop_row1=shop_list[0:4]
-        # shop_row2=shop_list[4:9]
-        # shop_row3=shop_list[9:13]
-
-        # for i in range (2,9,3):
-        #     for btn in shop_row1: btn.grid(row=2, column=i, padx=(1, 1))
-        #     for btn in shop_row2: btn.grid(row=5, column=i)
-        #     for btn in shop_row3: btn.grid(row=7, column=i)
+            if col_index >= max_columns:
+                col_index = 0
+                row_index += 1
   
 
         # Option to skip shopping
         skip_button = tk.Button(
-            self.shop_window,
+            self.shop_exit,
             text="Skip and collect bonus gold",
             command=lambda: self.skip_shop(self.shop_window)
         )
