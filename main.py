@@ -37,6 +37,7 @@ class App(ttk.Frame):
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
         self.photo = self.tk.PhotoImage(file="./assets/bgshop.png")
+        self.winphoto = self.tk.PhotoImage(file="./assets/winningbg.png")
         self.root.title('Study Up Till Death')
    
 
@@ -440,7 +441,9 @@ class App(ttk.Frame):
 
     def game_over_screen(self, message):
         """Display a Game Over screen."""
-        
+        pic_label = self.tk.Label(self.root, image=self.winphoto)
+        pic_label.place(x=0, y=0)
+
         # Game Over message
         game_over_label = tk.Label(self.root, text=message)
         game_over_label.place(relx=0.5, rely=0.3, anchor="center")
