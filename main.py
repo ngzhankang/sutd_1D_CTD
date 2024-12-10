@@ -336,7 +336,35 @@ class App(ttk.Frame):
         deck_window.state('zoomed')
         deck_window.update_idletasks()
 
+        # when window close, close window
         deck_window.protocol("WM_DELETE_WINDOW", lambda: self.close_window(deck_window))
+
+        # create frame to center cards
+        cards_frame = tk.Frame(deck_window)
+        cards_frame.pack(expand=True)
+        cards_frame.place(relx=0.5, rely=0.5, anchor="center")
+
+        # loop through each card in deck
+        columns = 4
+        for index, card in enumerate(self.deck):
+
+            # create button for card
+            button = tk.Button(
+                cards_frame,
+                text=f"{card.name} ({card.grade})",
+                width=self.window_width//110, 
+                height=5,
+                bg = '#BF1010',
+                fg = '#F1C232',
+                font=("Old School Adventures", 10)
+            )
+
+            # calculate row and column of card
+            row = index // columns
+            column = index % columns
+
+            # create button into grid
+            button.grid(row=row, column=column, padx=10, pady=10)
 
 
     def show_shop(self):
