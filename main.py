@@ -42,16 +42,16 @@ class App(ttk.Frame):
 
     def setup_ui(self):
         # Layout Frames
-        self.top_frame = tk.Frame(self.root)
+        self.top_frame = tk.Frame(self.root, bg='#1B1B1B')
         self.top_frame.place(relx=0.5, rely=0.1, anchor="center")  # Position top frame in the center
 
-        self.stats_frame = tk.Frame(self.root)
+        self.stats_frame = tk.Frame(self.root, bg='#1B1B1B')
         self.stats_frame.place(relx=0.5, rely=0.2, anchor="center")  # Position stats frame
 
-        self.cards_frame = tk.Frame(self.root)
+        self.cards_frame = tk.Frame(self.root, bg='#1B1B1B')
         self.cards_frame.place(relx=0.5, rely=0.6, anchor="center")  # Position cards frame
 
-        self.actions_frame = tk.Frame(self.root)
+        self.actions_frame = tk.Frame(self.root, bg='#1B1B1B')
         self.actions_frame.place(relx=0.5, rely=0.8, anchor="center")  # Position actions frame
 
         # Stats Display
