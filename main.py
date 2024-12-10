@@ -37,7 +37,7 @@ class App(ttk.Frame):
         self.window_width = self.root.winfo_width()  # Get window width
         self.window_height = self.root.winfo_height()  # Get window height
         self.photo = self.tk.PhotoImage(file="./assets/bgshop.png")
-        self.winphoto = self.tk.PhotoImage(file="./assets/winningbg.png")
+        self.winphoto = self.tk.PhotoImage(file="./assets/winningbg2.png")
         self.root.title('Study Up Till Death')
    
 
@@ -445,15 +445,15 @@ class App(ttk.Frame):
         pic_label.place(x=0, y=0)
 
         # Game Over message
-        game_over_label = tk.Label(self.root, text=message)
-        game_over_label.place(relx=0.5, rely=0.3, anchor="center")
-
+        game_over_label = tk.Label(self.root, text=message, font=("Old School Adventures", 25), bg='#1B1B1B', fg='#F1C232')
+        game_over_label.place(relx=0.5, rely=0.2, anchor="center")
+        
         # Buttons for Quit and Restart
-        quit_button = tk.Button(self.root, text="Quit", command=self.quit_game, width=20, height=2)
-        quit_button.place(relx=0.5, rely=0.5, anchor="center")
+        quit_button = tk.Button(self.root, text="Quit", command=self.quit_game, width=20, height=2, font=("Old School Adventures", 9), bg='white', fg='#05349B')
+        quit_button.place(relx=0.3, rely=0.7, anchor="center")
 
-        restart_button = tk.Button(self.root, text="Restart", command=self.restart_game, width=20, height=2)
-        restart_button.place(relx=0.5, rely=0.7, anchor="center")
+        restart_button = tk.Button(self.root, text="Restart", command=self.restart_game, width=20, height=2, font=("Old School Adventures", 9), bg='white', fg='#05349B')
+        restart_button.place(relx=0.7, rely=0.7, anchor="center")
 
     def quit_game(self):
         """Quit the game."""
